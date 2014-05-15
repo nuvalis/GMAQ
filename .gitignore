@@ -18,3 +18,4 @@ Thumbs.db
 composer.json
 composer.lock
 vendor/.git
+app/db
