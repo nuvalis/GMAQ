@@ -24,6 +24,7 @@ class Auth {
 		{
 			return true;
 		} else {
+			$this->flashy->error("You must login to use this service.");
 			$this->redirect("users/login");
 		}
 
