@@ -6,9 +6,8 @@ namespace Anax\Users;
  * A controller for users and admin related events.
  *
  */
-class UsersController implements \Anax\DI\IInjectionAware
+class UsersController extends \nuvalis\Base\ApplicationController
 {
-    use \Anax\DI\TInjectable;
 
 	/**
 	 * Initialize the controller.
@@ -20,6 +19,16 @@ class UsersController implements \Anax\DI\IInjectionAware
 	    $this->users = new \Anax\Users\User();
 	    $this->users->setDI($this->di);
 	    $this->theme->setTitle("User");
+	}
+
+    /**
+	 * List all users.
+	 *
+	 * @return void
+	 */
+	public function indexAction()
+	{
+		$this->listAction();
 	}
 
 	/**
