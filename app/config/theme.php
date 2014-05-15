@@ -13,7 +13,7 @@ return [
      */
     'settings' => [
         'path' => ANAX_INSTALL_PATH . 'theme/',
-        'name' => 'anax-base',
+        'name' => 'nuva-less',
     ],
 
     
@@ -21,8 +21,8 @@ return [
      * Add default views.
      */
     'views' => [
-        ['region' => 'header', 'template' => 'welcome/header', 'data' => [], 'sort' => -1],
-        ['region' => 'footer', 'template' => 'welcome/footer', 'data' => [], 'sort' => -1],
+        ['region' => 'header', 'template' => 'site/header', 'data' => [], 'sort' => -1],
+        ['region' => 'footer', 'template' => 'site/footer', 'data' => [], 'sort' => -1],
     ],
 
 
@@ -35,7 +35,7 @@ return [
         'lang' => 'sv',
 
         // Append this value to each <title>
-        'title_append' => ' | Anax a web template',
+        'title_append' => ' | Give Me A Quest!',
 
         // Stylesheets
         'stylesheets' => ['css/style.css'],
