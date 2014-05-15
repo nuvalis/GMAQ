@@ -36,6 +36,12 @@ class Votes extends \Anax\MVC\BaseModel
  	public function checkVoteExist($postid, $userId)
  	{
 
+ 		$this->checkPostExist($postid);
+
+ 		if($userId == false) {
+ 			throw new \Exception("You can't vote without a user id.", 1);
+ 		}
+
  		$this->db->select()->from($this->getSource())
  		->where("posts_id = ?")
  		->andWhere("user_id = ?");
@@ -47,6 +53,22 @@ class Votes extends \Anax\MVC\BaseModel
  		if($res) {
 
  			throw new \Exception("You have voted once", 1);
+
+ 		}
+
+ 	}
+
+ 	public function checkPostExist($postid) 
+ 	{
+
+ 		$this->db->select()->from("posts")->where("id = ?");
+ 		$this->db->execute([$postid]);
+
+ 		$res = $this->db->fetchAll();
+
+ 		if(!$res) {
+
+ 			throw new \Exception("Post does not exist, can't vote on that.", 1);
 
  		}
 

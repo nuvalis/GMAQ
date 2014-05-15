@@ -6,9 +6,8 @@ namespace Anax\Votes;
  * A controller for Votes and admin related events.
  *
  */
-class VotesController implements \Anax\DI\IInjectionAware
+class VotesController extends \nuvalis\Base\ApplicationController
 {
-    use \Anax\DI\TInjectable;
 
 	/**
 	 * Initialize the controller.
@@ -18,9 +17,8 @@ class VotesController implements \Anax\DI\IInjectionAware
 	public function initialize()
 	{
 	    $this->votes = new \Anax\Votes\Votes();
-	    $this->auth->isLoggedIn();
 	    $this->votes->setDI($this->di);
-	    $this->theme->setTitle("User");
+	    $this->theme->setTitle("Vote");
 	}
 
 	public function upAction($id)
@@ -34,7 +32,5 @@ class VotesController implements \Anax\DI\IInjectionAware
 		$this->votes->voteDownAnswer($id, $this->auth->userId());
 	 
 	}
-
-
 	 
 }
