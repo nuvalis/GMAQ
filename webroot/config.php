@@ -12,7 +12,7 @@
 define('ANAX_INSTALL_PATH', realpath(__DIR__ . '/../') . '/');
 define('ANAX_APP_PATH',     ANAX_INSTALL_PATH . 'app/');
 
-
+date_default_timezone_set('Europe/Paris');
 
 /**
  * Include autoloader.
