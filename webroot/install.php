@@ -44,6 +44,8 @@ $app->router->add('install', function() use ($app) {
 				'user_id' => ['integer', 'not null'],
 				'title' => ['varchar(128)'],
 				'content' => ['text'],
+				'type' => ['varchar(128)', 'not null'],
+				'views' => ['integer'],
 				'created' => ['datetime'],
 				'updated' => ['datetime'],
 				'deleted' => ['datetime'],
@@ -68,6 +70,9 @@ $app->router->add('install', function() use ($app) {
 				'posts_id' => ['integer', 'not null'],
 				'user_id' => ['integer', 'not null'],
 				'vote' => ['integer', 'not null'],
+				'created' => ['datetime'],
+				'updated' => ['datetime'],
+				'deleted' => ['datetime'],
 			]
 		)->execute();
 
@@ -76,6 +81,9 @@ $app->router->add('install', function() use ($app) {
 			[
 				'tag_id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'tag_name' => ['varchar(128)'],
+				'created' => ['datetime'],
+				'updated' => ['datetime'],
+				'deleted' => ['datetime'],
 			]
 		)->execute();
 
