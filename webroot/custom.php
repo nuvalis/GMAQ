@@ -36,6 +36,24 @@
 	    return $controller;
 	});
 
+	$di->set('QuestionsController', function() use ($di) {
+	    $controller = new \Anax\Questions\QuestionsController();
+	    $controller->setDI($di);
+	    return $controller;
+	});
+
+	$di->set('AnswersController', function() use ($di) {
+	    $controller = new \Anax\Answers\AnswersController();
+	    $controller->setDI($di);
+	    return $controller;
+	});
+
+	$di->set('CommentsController', function() use ($di) {
+	    $controller = new \Anax\Comments\CommentsController();
+	    $controller->setDI($di);
+	    return $controller;
+	});
+
 	$di->set('UsersController', function() use ($di) {
     	$controller = new \Anax\Users\UsersController();
     	$controller->setDI($di);
