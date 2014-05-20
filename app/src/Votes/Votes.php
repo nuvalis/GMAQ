@@ -12,11 +12,14 @@ class Votes extends \Anax\MVC\BaseModel
  	public function voteUp($postid, $userId, $target) 
  	{
  		$this->checkVoteExist($postid, $userId, $target);
+ 		
+ 		$now = date(DATE_RFC2822);
 
  		$this->save([
 		$target . '_id' 	=> $postid,
 		'user_id' 			=> $userId,
-		'vote_value'		=> "1"
+		'vote_value'		=> "1",
+		'created'			=> $now
 		]);
 
  	}
@@ -25,10 +28,13 @@ class Votes extends \Anax\MVC\BaseModel
  	{
  		$this->checkVoteExist($postid, $userId, $target);
 
+ 		$now = date(DATE_RFC2822);
+
  		$this->save([
 		$target . '_id' 	=> $postid,
 		'user_id' 			=> $userId,
-		'vote_value'		=> "-1"
+		'vote_value'		=> "-1",
+		'created'			=> $now
 		]);
  		
  	}
@@ -71,6 +77,19 @@ class Votes extends \Anax\MVC\BaseModel
  			throw new \Exception("Target $target does not exist, can't vote on that.", 1);
 
  		}
+
+ 	}
+
+ 	public function calcVotes($target, $id)
+ 	{
+
+ 		$this->db->select("SUM(vote_value) AS votes_sum")->from("votes")->where($target . "_id = ?");
+ 		$this->db->execute([$id]);
+
+ 		$res = $this->db->fetchAll();
+ 		$res = $res[0];
+
+ 		return $res->votes_sum;
 
  	}
  

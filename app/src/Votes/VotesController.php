@@ -32,5 +32,10 @@ class VotesController extends \nuvalis\Base\ApplicationController
 		$this->votes->voteDown($id, $this->auth->userId(), $target);
 	 
 	}
+
+	public function calcAction($target, $id) 
+	{
+		$this->votes->calcVotes($target, $id);
+	}
 	 
 }
