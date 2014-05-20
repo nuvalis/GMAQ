@@ -9,6 +9,43 @@ namespace Anax\Questions;
 class QuestionsController extends \Anax\Posts\PostsController
 {
 
+	public function idAction($id = null)
+	{
+	 
+	    $post = $this->posts->findById($id);
+	 
+	    $this->theme->setTitle("Question");
+	    $this->views->add('posts/view_question', [
+	        'post' => $post,
+	    ]);
+	}
+
+	public function indexAction()
+	{
+
+		$all = $this->posts->findByType("question");
+	 
+		$this->theme->setTitle("List all posts");
+	    $this->views->add('posts/list_questions', [
+	        'posts' => $all,
+	        'title' => "View all posts",
+	    ]);
+
+	}
+
+	public function listAction()
+	{
+	 
+	    $all = $this->posts->findByType("question");
+	 
+	    $this->theme->setTitle("List all questions");
+	    $this->views->add('posts/list_questions', [
+	        'posts' => $all,
+	        'title' => "View all post",
+	    ]);
+
+	}
+
 	public function newAction()
 	{
 
@@ -22,7 +59,7 @@ class QuestionsController extends \Anax\Posts\PostsController
 				'validation'  => ['not_empty'],
 			],
 			'content' => [
-				'type'        => 'text',
+				'type'        => 'textarea',
 				'label'       => 'Content',
 				'required'    => true,
 				'validation'  => ['not_empty'],
@@ -53,7 +90,7 @@ class QuestionsController extends \Anax\Posts\PostsController
 
 		if ($status === true) {
 		 
-		    $url = $this->url->create('posts');
+		    $url = $this->url->create('questions');
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {

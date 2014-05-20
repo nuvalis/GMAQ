@@ -43,7 +43,7 @@ class PostsController extends \nuvalis\Base\ApplicationController
 	public function listAction()
 	{
 	 
-	    $all = $this->posts->findAll();
+	    $all = $this->posts->findByType("question");
 	 
 	    $this->theme->setTitle("List all posts");
 	    $this->views->add('posts/list', [

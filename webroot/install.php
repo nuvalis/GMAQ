@@ -33,17 +33,16 @@ $app->router->add('install', function() use ($app) {
 		$app->db->dropTableIfExists('posts_cat_ref')->execute();
 		$app->db->dropTableIfExists('posts_tag_ref')->execute();
 		$app->db->dropTableIfExists('comments')->execute();
-		$app->db->dropTableIfExists('tags')->execute();
-		$app->db->dropTableIfExists('tags')->execute();
-	 
+		$app->db->dropTableIfExists('quest_answers_ref')->execute();
+		
 		$app->db->createTable(
 			'posts',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'cat_id' => ['integer', 'not null'],
+				'cat_id' => ['integer'],
 				'user_id' => ['integer', 'not null'],
-				'title' => ['varchar(128)'],
-				'content' => ['text'],
+				'title' => ['varchar(128)', 'not null'],
+				'content' => ['text', 'not null'],
 				'type' => ['varchar(128)', 'not null'],
 				'views' => ['integer'],
 				'created' => ['datetime'],
@@ -102,6 +101,15 @@ $app->router->add('install', function() use ($app) {
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'cat_id' => ['integer', 'not null'],
 				'posts_id' => ['integer', 'not null'],
+			]
+		)->execute();
+
+		$app->db->createTable(
+			'quest_answers_ref',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'quest_parent_id' => ['integer', 'not null'],
+				'answer_id' => ['integer', 'not null'],
 			]
 		)->execute();
 
