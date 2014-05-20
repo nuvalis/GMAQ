@@ -14,3 +14,8 @@ TODO
 	- [ ] Better Auth
 - [ ] Implement Tagging
 - [ ] Clean Up Code
+
+
+Notes
+=====================
+Remember to change newActions() cat_id
