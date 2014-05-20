@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Votes;
+namespace nuvalis\Votes;
  
 /**
  * Model for Users.
@@ -9,41 +9,41 @@ namespace Anax\Votes;
 class Votes extends \Anax\MVC\BaseModel
 {
 
- 	public function voteUpAnswer($postid, $userId) 
+ 	public function voteUp($postid, $userId, $target) 
  	{
- 		$this->checkVoteExist($postid, $userId);
+ 		$this->checkVoteExist($postid, $userId, $target);
 
  		$this->save([
-		'posts_id' 	=> $postid,
-		'user_id' 	=> $userId,
-		'vote'		=> "1"
+		$target . '_id' 	=> $postid,
+		'user_id' 			=> $userId,
+		'vote_value'		=> "1"
 		]);
 
  	}
 
- 	public function voteDownAnswer($postid, $userId) 
+ 	public function voteDown($postid, $userId, $target) 
  	{
- 		$this->checkVoteExist($postid, $userId);
+ 		$this->checkVoteExist($postid, $userId, $target);
 
  		$this->save([
-		'posts_id' 	=> $postid,
-		'user_id' 	=> $userId,
-		'vote'		=> "-1"
+		$target . '_id' 	=> $postid,
+		'user_id' 			=> $userId,
+		'vote_value'		=> "-1"
 		]);
  		
  	}
 
- 	public function checkVoteExist($postid, $userId)
+ 	public function checkVoteExist($postid, $userId, $target)
  	{
 
- 		$this->checkPostExist($postid);
+ 		$this->checkPostExist($postid, $target);
 
  		if($userId == false) {
  			throw new \Exception("You can't vote without a user id.", 1);
  		}
 
  		$this->db->select()->from($this->getSource())
- 		->where("posts_id = ?")
+ 		->where($target . "_id = ?")
  		->andWhere("user_id = ?");
 
  		$this->db->execute([$postid, $userId]);
@@ -58,17 +58,17 @@ class Votes extends \Anax\MVC\BaseModel
 
  	}
 
- 	public function checkPostExist($postid) 
+ 	public function checkPostExist($postid, $target) 
  	{
 
- 		$this->db->select()->from("posts")->where("id = ?");
+ 		$this->db->select()->from($target)->where("id = ?");
  		$this->db->execute([$postid]);
 
  		$res = $this->db->fetchAll();
 
  		if(!$res) {
 
- 			throw new \Exception("Post does not exist, can't vote on that.", 1);
+ 			throw new \Exception("Target $target does not exist, can't vote on that.", 1);
 
  		}
 

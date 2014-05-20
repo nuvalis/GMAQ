@@ -1,6 +1,6 @@
 <?php
 
-namespace nuvalis\Base;
+namespace nuvalis\Comments;
  
 /**
  * A controller for posts and admin related events.

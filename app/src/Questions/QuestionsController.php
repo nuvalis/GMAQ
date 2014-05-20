@@ -1,49 +1,64 @@
 <?php
 
-namespace Anax\Questions;
+namespace nuvalis\Questions;
  
 /**
  * A controller for posts and admin related events.
  *
  */
-class QuestionsController extends \Anax\Posts\PostsController
+class QuestionsController extends \nuvalis\Base\ApplicationController
 {
 
-	public function idAction($id = null)
+	public function initialize()
 	{
-	 
-	    $post = $this->posts->findById($id);
-	    $answers = $this->posts->findAnswers($id);
-	 
-	    $this->theme->setTitle("Question");
-	    $this->views->add('posts/view_question', [
-	        'post' => $post,
-	        'answers' => $answers,
-	    ]);
+	    $this->question = new \nuvalis\Questions\Questions();
+	    $this->question->setDI($this->di);
+	    $this->theme->setTitle("Questions");
 	}
 
 	public function indexAction()
 	{
 
-		$all = $this->posts->findByType("question");
+		$this->listAction();
+
+	}
+
+	public function idAction($id)
+	{
 	 
-		$this->theme->setTitle("List all posts");
-	    $this->views->add('posts/list_questions', [
-	        'posts' => $all,
-	        'title' => "View all posts",
+	    $question = $this->question->findById($id);
+	    $answers = $this->question->findAnswers($id);
+	 
+	    $this->theme->setTitle("Question");
+	    $this->views->add('question/view_question', [
+	        'question' => $question,
+	        'answers' => $answers,
 	    ]);
 
+	   	$this->dispatcher->forward([
+			'controller' => 'answers',
+			'action'     => 'list-answers',
+			'params'      => [$id],
+		]);
+
+		$this->question->countId($id);
 	}
 
 	public function listAction()
 	{
 	 
-	    $all = $this->posts->findByType("question");
+		$all = $this->question->findAll();
+
+		foreach($all as $q) {
+
+			$q->answersCount = $this->question->countAnswers($q->id);
+
+		}
 	 
-	    $this->theme->setTitle("List all questions");
-	    $this->views->add('posts/list_questions', [
-	        'posts' => $all,
-	        'title' => "View all post",
+		$this->theme->setTitle("List all Questions");
+	    $this->views->add('question/list_questions', [
+	        'questions' => $all,
+	        'title' => "View all Questions",
 	    ]);
 
 	}
@@ -72,10 +87,9 @@ class QuestionsController extends \Anax\Posts\PostsController
 
 					$now = date(DATE_RFC2822);
 			 
-				    $this->posts->save([
+				    $this->question->save([
 				        'title' 	=> $form->Value('title'),
 				        'content' 	=> $form->Value('content'),
-				        'type'		=> "question",
 				        'user_id' 	=> $this->auth->userid(),
 				        'cat_id' 	=> $this->auth->userid(),
 				        'created' 	=> $now,
@@ -103,7 +117,7 @@ class QuestionsController extends \Anax\Posts\PostsController
 		}
 
 		$this->theme->setTitle("New Question");
-		$this->views->add('posts/new_question', [
+		$this->views->add('question/new_question', [
 			'title' => "New Question",
 			'form' => $form->getHTML()
 		]);

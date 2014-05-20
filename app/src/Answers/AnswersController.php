@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Answers;
+namespace nuvalis\Answers;
  
 /**
  * A controller for posts and admin related events.
@@ -11,7 +11,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 
 	public function initialize()
 	{
-	    $this->posts = new \Anax\Posts\Posts();
+	    $this->posts = new \nuvalis\Answers\Answers();
 	    $this->posts->setDI($this->di);
 	    $this->theme->setTitle("Application");
 	}
@@ -43,14 +43,10 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 				    $this->posts->save([
 				        'title' 	=> $form->Value('title'),
 				        'content' 	=> $form->Value('content'),
-				        'type'		=> "answer",
 				        'user_id' 	=> $this->auth->userid(),
+				        'questions_id' 	=> $questionID,
 				        'created' 	=> $now,
 				    ]);
-
-				    $answerID = $this->db->lastInsertId();
-
-				    $this->posts->linkAnswer($questionID, $answerID);
 
 					return true;
 				}
@@ -74,16 +70,14 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 		}
 
 		$this->theme->setTitle("New Answer");
-		$this->views->add('posts/new_question', [
+		$this->views->add('question/new_question', [
 			'title' => "New Answer",
 			'form' => $form->getHTML()
 		]);
 	}
 
-	public function listAnswersForQuestionId($id)
+	public function listAnswersAction($id)
 	{
-
-
 
 	}
 	 

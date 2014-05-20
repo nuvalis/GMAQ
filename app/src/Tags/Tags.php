@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Tags;
+namespace nuvalis\Tags;
  
 /**
  * Model for Tags.
