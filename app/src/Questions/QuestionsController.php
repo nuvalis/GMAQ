@@ -13,10 +13,12 @@ class QuestionsController extends \Anax\Posts\PostsController
 	{
 	 
 	    $post = $this->posts->findById($id);
+	    $answers = $this->posts->findAnswers($id);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('posts/view_question', [
 	        'post' => $post,
+	        'answers' => $answers,
 	    ]);
 	}
 

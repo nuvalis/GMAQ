@@ -36,7 +36,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 			],
 			'submit' => [
 				'type'      => 'submit',
-				'callback'  => function($form) {
+				'callback'  => function($form) use ($questionID) {
 
 					$now = date(DATE_RFC2822);
 			 
@@ -63,7 +63,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 
 		if ($status === true) {
 		 
-		    $url = $this->url->create('posts');
+		    $url = $this->url->create('questions/id/' . $questionID);
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
@@ -83,7 +83,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	public function listAnswersForQuestionId($id)
 	{
 
-		
+
 
 	}
 	 

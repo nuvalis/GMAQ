@@ -3,7 +3,7 @@
 <div class="question">
 	<?= $post->content ?>	
 </div>
-
+<hr>
 <div class="answers">
 
 	<?php if(isset($answers)) : ?>
@@ -13,7 +13,8 @@
 			<?= $answer->content ?>
 		</div>		
 
-	<?php endforeach; else : ?>
+	<?php endforeach; ?> 
+	<?php else : ?>
 	
 		<h3>No answers yet. Be the first one!</h3>
 	

@@ -1,23 +1,16 @@
 # http://httpd.apache.org/docs/current/mod/core.html#errordocument
-#ErrorDocument 404 /404.php
-ErrorDocument 404 "This is a Anax 404. Document is not here."
+ErrorDocument 404 /404.php
+#ErrorDocument 404 "This is a Anax 404. Document is not here."
 
 
 #<IfModule mod_rewrite.c>
-#  RewriteEngine on
+  RewriteEngine on
 #
 #  # Must use RewriteBase on www.student.bth.se, Rewritebase for url /~mos/test is /~mos/test/
-#  #RewriteBase /change/this/to/site/base/url/if/needed/
+ 	RewriteBase /~nuvalis/projects/GMAQ/webroot/
 #
-#  RewriteCond %{REQUEST_FILENAME} !-f
-#  #RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
 #
-#  RewriteRule (.*) index.php/$1 [NC,L]
+  RewriteRule (.*) index.php/$1 [NC,L]
 #</IfModule>
-
-RewriteEngine on
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-RewriteRule (.*) index.php/$1 [NC,L]

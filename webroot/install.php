@@ -26,24 +26,54 @@ $app->router->add('install', function() use ($app) {
 			]
 		)->execute();
 
-		$app->db->dropTableIfExists('posts')->execute();
+		$app->db->dropTableIfExists('questions')->execute();
+		$app->db->dropTableIfExists('answers')->execute();
+		$app->db->dropTableIfExists('comments')->execute();
 		$app->db->dropTableIfExists('category')->execute();
 		$app->db->dropTableIfExists('votes')->execute();
 		$app->db->dropTableIfExists('tags')->execute();
-		$app->db->dropTableIfExists('posts_cat_ref')->execute();
-		$app->db->dropTableIfExists('posts_tag_ref')->execute();
-		$app->db->dropTableIfExists('comments')->execute();
-		$app->db->dropTableIfExists('quest_answers_ref')->execute();
+		$app->db->dropTableIfExists('questions_cat_ref')->execute();
+		$app->db->dropTableIfExists('questions_tag_ref')->execute();
+		$app->db->dropTableIfExists('questions_answers_ref')->execute();
+		$app->db->dropTableIfExists('questions_comments_ref')->execute();
+		$app->db->dropTableIfExists('answers_comments_ref')->execute();
 		
 		$app->db->createTable(
-			'posts',
+			'questions',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'cat_id' => ['integer'],
 				'user_id' => ['integer', 'not null'],
 				'title' => ['varchar(128)', 'not null'],
 				'content' => ['text', 'not null'],
-				'type' => ['varchar(128)', 'not null'],
+				'views' => ['integer'],
+				'created' => ['datetime'],
+				'updated' => ['datetime'],
+				'deleted' => ['datetime'],
+			]
+		)->execute();
+
+		$app->db->createTable(
+			'answers',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'user_id' => ['integer', 'not null'],
+				'title' => ['varchar(128)', 'not null'],
+				'content' => ['text', 'not null'],
+				'views' => ['integer'],
+				'created' => ['datetime'],
+				'updated' => ['datetime'],
+				'deleted' => ['datetime'],
+			]
+		)->execute();
+
+		$app->db->createTable(
+			'comments',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'user_id' => ['integer', 'not null'],
+				'title' => ['varchar(128)', 'not null'],
+				'content' => ['text', 'not null'],
 				'views' => ['integer'],
 				'created' => ['datetime'],
 				'updated' => ['datetime'],
@@ -66,9 +96,11 @@ $app->router->add('install', function() use ($app) {
 			'votes',
 			[
 				'votes_id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'posts_id' => ['integer', 'not null'],
+				'questions_id' => ['integer'],
+				'answers_id' => ['integer'],
+				'comments_id' => ['integer'],
 				'user_id' => ['integer', 'not null'],
-				'vote' => ['integer', 'not null'],
+				'vote_value' => ['integer', 'not null'],
 				'created' => ['datetime'],
 				'updated' => ['datetime'],
 				'deleted' => ['datetime'],
@@ -87,62 +119,75 @@ $app->router->add('install', function() use ($app) {
 		)->execute();
 
 		$app->db->createTable(
-			'posts_tag_ref',
+			'questions_tag_ref',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'tag_id' => ['integer', 'not null'],
-				'posts_id' => ['integer', 'not null'],
+				'questions_id' => ['integer', 'not null'],
 			]
 		)->execute();
 
 		$app->db->createTable(
-			'posts_cat_ref',
+			'questions_cat_ref',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'cat_id' => ['integer', 'not null'],
-				'posts_id' => ['integer', 'not null'],
+				'questions_id' => ['integer', 'not null'],
 			]
 		)->execute();
 
 		$app->db->createTable(
-			'quest_answers_ref',
+			'questions_answers_ref',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'quest_parent_id' => ['integer', 'not null'],
-				'answer_id' => ['integer', 'not null'],
+				'questions_id' => ['integer', 'not null'],
+				'answers_id' => ['integer', 'not null'],
+			]
+		)->execute();
+
+		$app->db->createTable(
+			'answers_comments_ref',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'comments_id' => ['integer', 'not null'],
+				'answers_id' => ['integer', 'not null'],
+			]
+		)->execute();
+
+		$app->db->createTable(
+			'questions_comments_ref',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'comments_id' => ['integer', 'not null'],
+				'questions_id' => ['integer', 'not null'],
 			]
 		)->execute();
 
 
 		$app->db->execute(
 						"PRAGMA foreign_keys = ON;
-						ALTER TABLE `posts`  
-						ADD CONSTRAINT `fk_post_cat_id` 
-    					FOREIGN KEY (`cat_id`) REFERENCES `posts_tag_ref` (`cat_id`) ON DELETE CASCADE;");
+						ALTER TABLE `questions`  
+						ADD CONSTRAINT `fk_questions_cat_id` 
+    					FOREIGN KEY (`cat_id`) REFERENCES `questions_tag_ref` (`cat_id`) ON DELETE CASCADE;");
 
 		$app->db->execute(
 						"PRAGMA foreign_keys = ON;
-						ALTER TABLE `posts`  
-						ADD CONSTRAINT `fk_post_tag_id` 
-    					FOREIGN KEY (`tag_id`) REFERENCES `posts_cat_ref` (`tag_id`) ON DELETE CASCADE;");
+						ALTER TABLE `questions`  
+						ADD CONSTRAINT `fk_questions_tag_id` 
+    					FOREIGN KEY (`tag_id`) REFERENCES `questions_cat_ref` (`tag_id`) ON DELETE CASCADE;");
 
 		$app->db->execute(
 						"PRAGMA foreign_keys = ON;
-						ALTER TABLE `posts_cat_ref`  
-						ADD CONSTRAINT `fk_post_ref_cat_id` 
+						ALTER TABLE `questions_cat_ref`  
+						ADD CONSTRAINT `fk_questions_ref_cat_id` 
     					FOREIGN KEY (`tag_id`) REFERENCES `category` (`cat_id`) ON DELETE CASCADE;");
 
 		$app->db->execute(
 						"PRAGMA foreign_keys = ON;
-						ALTER TABLE `posts_tag_ref`  
-						ADD CONSTRAINT `fk_post_ref_tag_id` 
+						ALTER TABLE `questions_tag_ref`  
+						ADD CONSTRAINT `fk_questions_ref_tag_id` 
     					FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`) ON DELETE CASCADE;");
-
-		$app->db->execute(
-						"PRAGMA foreign_keys = ON;
-						ALTER TABLE `posts`  
-						ADD CONSTRAINT `fk_post_votes_id` 
-    					FOREIGN KEY (`votes_id`) REFERENCES `votes` (`votes_id`) ON DELETE CASCADE;");		
+		
 
 
 		$app->flashy->success("Setup is Done");

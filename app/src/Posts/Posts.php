@@ -33,8 +33,24 @@ class Posts extends \Anax\MVC\BaseModel
 
  	public function linkAnswer($qid, $aid) 
  	{
- 		$this->db->insert('quest_answers_ref', ['quest_id', 'answer_id']);
+ 		$this->db->insert('quest_answers_ref', ['quest_parent_id', 'answer_id']);
 		$this->db->execute([$qid, $aid]);
+ 	}
+
+ 	public function findAnswers($questionID) 
+ 	{
+
+ 	$this->db->select()
+	    ->from('posts AS p')
+	    ->join("quest_answers_ref AS anw", "anw.quest_parent_id = ?");
+
+		echo $this->db->getSQL();
+	    exit;
+
+	$this->db->execute([$questionID]);
+	$this->db->setFetchModeClass(__CLASS__);
+	return $this->db->fetchAll();
+
  	}
 
 
