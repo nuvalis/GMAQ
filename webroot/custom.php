@@ -25,31 +25,31 @@
 	});
 
 	$di->set('PostsController', function() use ($di) {
-	    $controller = new \Anax\Posts\PostsController();
+	    $controller = new \nuvalis\Posts\PostsController();
 	    $controller->setDI($di);
 	    return $controller;
 	});
 
 	$di->set('VotesController', function() use ($di) {
-	    $controller = new \Anax\Votes\VotesController();
+	    $controller = new \nuvalis\Votes\VotesController();
 	    $controller->setDI($di);
 	    return $controller;
 	});
 
 	$di->set('QuestionsController', function() use ($di) {
-	    $controller = new \Anax\Questions\QuestionsController();
+	    $controller = new \nuvalis\Questions\QuestionsController();
 	    $controller->setDI($di);
 	    return $controller;
 	});
 
 	$di->set('AnswersController', function() use ($di) {
-	    $controller = new \Anax\Answers\AnswersController();
+	    $controller = new \nuvalis\Answers\AnswersController();
 	    $controller->setDI($di);
 	    return $controller;
 	});
 
 	$di->set('CommentsController', function() use ($di) {
-	    $controller = new \Anax\Comments\CommentsController();
+	    $controller = new \nuvalis\Comments\CommentsController();
 	    $controller->setDI($di);
 	    return $controller;
 	});

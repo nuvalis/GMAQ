@@ -9,23 +9,6 @@ $app->router->add('install', function() use ($app) {
 
 		$app->theme->setTitle("Setup");
 	 
-		$app->db->dropTableIfExists('user')->execute();
-	 
-		$app->db->createTable(
-			'user',
-			[
-				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'acronym' => ['varchar(20)', 'unique', 'not null'],
-				'email' => ['varchar(80)', 'unique', 'not null'],
-				'name' => ['varchar(80)'],
-				'password' => ['varchar(255)'],
-				'created' => ['datetime'],
-				'updated' => ['datetime'],
-				'deleted' => ['datetime'],
-				'active' => ['datetime'],
-			]
-		)->execute();
-
 		$app->db->dropTableIfExists('questions')->execute();
 		$app->db->dropTableIfExists('answers')->execute();
 		$app->db->dropTableIfExists('comments')->execute();
@@ -57,6 +40,7 @@ $app->router->add('install', function() use ($app) {
 			'answers',
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'questions_id' => ['integer', 'not_null'],
 				'user_id' => ['integer', 'not null'],
 				'title' => ['varchar(128)', 'not null'],
 				'content' => ['text', 'not null'],
@@ -133,15 +117,6 @@ $app->router->add('install', function() use ($app) {
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'cat_id' => ['integer', 'not null'],
 				'questions_id' => ['integer', 'not null'],
-			]
-		)->execute();
-
-		$app->db->createTable(
-			'questions_answers_ref',
-			[
-				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'questions_id' => ['integer', 'not null'],
-				'answers_id' => ['integer', 'not null'],
 			]
 		)->execute();
 
