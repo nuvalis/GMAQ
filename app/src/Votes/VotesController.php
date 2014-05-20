@@ -23,13 +23,13 @@ class VotesController extends \nuvalis\Base\ApplicationController
 
 	public function upAction($target, $id)
 	{
-		$this->votes->voteUpAnswer($id, $this->auth->userId(), $target);
+		$this->votes->voteUp($id, $this->auth->userId(), $target);
 	}
 
 	public function downAction($target, $id)
 	{
 
-		$this->votes->voteDownAnswer($id, $this->auth->userId(), $target);
+		$this->votes->voteDown($id, $this->auth->userId(), $target);
 	 
 	}
 	 
