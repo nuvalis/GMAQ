@@ -1,9 +1,9 @@
 <?php
 
-namespace nuvalis\Base;
+namespace nuvalis\Tags;
  
 /**
- * A controller for posts and admin related events.
+ * A controller for tags and admin related events.
  *
  */
 class TagsController extends \nuvalis\Base\ApplicationController
@@ -11,8 +11,8 @@ class TagsController extends \nuvalis\Base\ApplicationController
 
 	public function initialize()
 	{
-	    $this->posts = new \Anax\Posts\Posts();
-	    $this->posts->setDI($this->di);
+	    $this->tags = new \Anax\Tags\Tags();
+	    $this->tags->setDI($this->di);
 	    $this->theme->setTitle("Tags");
 	}
 	 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Anax\Users;
+namespace Anax\Tags;
  
 /**
- * Model for Users.
+ * Model for Tags.
  *
  */
 class Tags extends \Anax\MVC\BaseModel
