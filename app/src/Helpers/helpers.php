@@ -1,6 +1,6 @@
 <?php
 
-namespace nuvalis
+namespace nuvalis\Helpers;
 
 class Helpers
 {

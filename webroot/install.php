@@ -44,6 +44,7 @@ $app->router->add('install', function() use ($app) {
 				'user_id' => ['integer', 'not null'],
 				'title' => ['varchar(128)', 'not null'],
 				'content' => ['text', 'not null'],
+				'accepted' => ['boolean'],
 				'views' => ['integer'],
 				'created' => ['datetime'],
 				'updated' => ['datetime'],
@@ -56,7 +57,8 @@ $app->router->add('install', function() use ($app) {
 			[
 				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
 				'user_id' => ['integer', 'not null'],
-				'title' => ['varchar(128)', 'not null'],
+				'questions_id' => ['integer'],
+				'answers_id' => ['integer'],
 				'content' => ['text', 'not null'],
 				'views' => ['integer'],
 				'created' => ['datetime'],

@@ -24,6 +24,11 @@
 	    return $flash;
 	});
 
+	$di->setShared('mzHelpers', function() {
+	    $mzHelpers = new nuvalis\Helpers\Helpers();
+	    return $mzHelpers;
+	});
+
 	$di->set('PostsController', function() use ($di) {
 	    $controller = new \nuvalis\Posts\PostsController();
 	    $controller->setDI($di);
