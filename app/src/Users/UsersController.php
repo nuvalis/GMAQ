@@ -458,15 +458,15 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		if($this->auth->userId()){
 
 			$this->flashy->success("Status: Logged In as " . $this->auth->username());
-			$this->response->redirect("");
 
 
 		} else {
 
 			$this->flashy->warning("Status: Logged Out");
-			$this->response->redirect("");
 
 		}
+
+		$this->indexAction();
 
 	}
 	 

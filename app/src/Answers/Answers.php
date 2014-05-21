@@ -27,6 +27,20 @@ class Answers extends \Anax\MVC\BaseModel
 
  	}
 
+ 	public function getAnswerParent($id)
+ 	{
+
+ 	$this->db->select()
+	    ->from('answers')
+	    ->where("id = ?");
+
+	$this->db->execute([$id]);
+	$res = $this->db->fetchOne();
+
+	return $res->questions_id;
+
+ 	}
+
 
 
 }

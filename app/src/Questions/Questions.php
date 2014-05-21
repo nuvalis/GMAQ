@@ -33,6 +33,19 @@ class Questions extends \Anax\MVC\BaseModel
 
  	}
 
+ 	public function findComments($questionID) 
+ 	{
+
+	$this->db->select("c.content, u.username, u.email")
+        ->from("comments AS c")
+       	->where("questions_id = ?")
+       	->join("user AS u", "u.id = c.user_id");
+
+    $this->db->execute([$questionID]);
+    return $this->db->fetchAll();
+
+ 	}
+
  	public function countId($id) 
  	{
 
@@ -57,7 +70,5 @@ class Questions extends \Anax\MVC\BaseModel
 
 
  	}
-
-
 
 }

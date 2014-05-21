@@ -3,7 +3,7 @@
 namespace nuvalis\Answers;
  
 /**
- * A controller for posts and admin related events.
+ * A controller for answers and admin related events.
  *
  */
 class AnswersController extends \nuvalis\Base\ApplicationController
@@ -11,13 +11,42 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 
 	public function initialize()
 	{
-	    $this->posts = new \nuvalis\Answers\Answers();
-	    $this->posts->setDI($this->di);
+	    $this->answers = new \nuvalis\Answers\Answers();
+	    $this->answers->setDI($this->di);
+	    $this->question = new \nuvalis\Questions\Questions();
+	    $this->question->setDI($this->di);
 	    $this->theme->setTitle("Application");
+	}
+
+	public function idAction($id)
+	{
+
+		$this->auth->isLoggedIn();
+
+		$parent = $this->answers->getAnswerParent($id);
+	 
+	    $question = $this->question->findById($parent);
+	    $answers = $this->question->findAnswers($parent);
+	 
+	    $this->theme->setTitle("Question");
+	    $this->views->add('question/view_question', [
+	        'question' => $question,
+	        'answers' => $answers,
+	    ]);
+
+	   	$this->dispatcher->forward([
+			'controller' => 'answers',
+			'action'     => 'list-answers',
+			'params'      => [$id],
+		]);
+
+		$this->question->countId($id);
 	}
 
 	public function newAction($questionID)
 	{
+
+		$this->auth->isLoggedIn();
 
  		$form = $this->form;
 
@@ -40,7 +69,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 
 					$now = date(DATE_RFC2822);
 			 
-				    $this->posts->save([
+				    $this->answers->save([
 				        'title' 	=> $form->Value('title'),
 				        'content' 	=> $form->Value('content'),
 				        'user_id' 	=> $this->auth->userid(),
@@ -78,6 +107,14 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 
 	public function listAnswersAction($id)
 	{
+
+	    $answers = $this->answers->findAnswers($id);
+	 
+	    $this->theme->setTitle("Answers");
+	    $this->views->add('answers/view_answers', [
+	        'answers' => $answers,
+	        'questionID' => $id,
+	    ]);
 
 	}
 	 

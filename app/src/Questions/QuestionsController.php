@@ -27,12 +27,12 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	{
 	 
 	    $question = $this->question->findById($id);
-	    $answers = $this->question->findAnswers($id);
+	    $comments = $this->question->findComments($id);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('question/view_question', [
 	        'question' => $question,
-	        'answers' => $answers,
+	        'comments' => $comments,
 	    ]);
 
 	   	$this->dispatcher->forward([
@@ -65,6 +65,8 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 
 	public function newAction()
 	{
+
+		$this->auth->isLoggedIn();
 
  		$form = $this->form;
 
