@@ -3,6 +3,14 @@
 <div class="question" data-questionsID="<?= $question->id ?>">
 	<p><?php if ($question->views === 0){echo "0";}else{echo $question->views;} ?> views </p>
 	
+	<?php if (isset($tags)): ?>
+		<div class="tags">
+			<?php foreach ($tags as $tag): ?>
+				<a href="<?= $this->url->create('tags/' . $tag->tag_name); ?>" class="tag-link"><?= $tag->tag_name; ?></a>
+			<?php endforeach ?>
+		</div>
+	<?php endif ?>
+
 	<p>
 	<?= $question->content ?>
 	</p>
@@ -14,7 +22,7 @@
 		<?php foreach($comments as $comment) : ?>
 				
 			<div class="comment-post">
-				<img src="<?= $this->mzHelpers->get_gravatar($comment->email, 40) ?>" alt="">
+				<img src="<?= $this->mzHelpers->get_gravatar($comment->email, 40); ?>" alt="">
 				<p><?= $comment->content ?></p>
 				<p>Author: <?= $comment->username ?></p>
 						

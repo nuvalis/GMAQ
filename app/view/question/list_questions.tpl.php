@@ -12,7 +12,13 @@
 		<p>Answers</p>
 		<?php if ($question->answersCount == 0){echo "0";} else {echo $question->answersCount;} ?>
 	</div>
-
+	<?php if (isset($question->tags)): ?>
+		<div class="tags">
+			<?php foreach ($question->tags as $tag): ?>
+				<a href="<?= $this->url->create('tags/' . $tag->tag_name); ?>" class="tag-link"><?= $tag->tag_name; ?></a>
+			<?php endforeach ?>
+		</div>
+	<?php endif ?>
 <?php endforeach; ?> 
 
 <hr>

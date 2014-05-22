@@ -15,5 +15,22 @@ class TagsController extends \nuvalis\Base\ApplicationController
 	    $this->tags->setDI($this->di);
 	    $this->theme->setTitle("Tags");
 	}
+
+	public function indexAction()
+	{
+
+		$this->listAction();
+
+	}
+
+	public function listAction()
+	{
+		
+	}
+
+	public function addAction() 
+	{
+
+	}
 	 
 }

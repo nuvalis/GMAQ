@@ -97,7 +97,7 @@ $app->router->add('install', function() use ($app) {
 			'tags',
 			[
 				'tag_id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'tag_name' => ['varchar(128)'],
+				'tag_name' => ['varchar(128)', 'unique'],
 				'created' => ['datetime'],
 				'updated' => ['datetime'],
 				'deleted' => ['datetime'],

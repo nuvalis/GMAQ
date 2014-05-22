@@ -23,16 +23,23 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 
 	}
 
+	public function testAction($id)
+	{
+		$this->question->findTags($id);
+	}
+
 	public function idAction($id)
 	{
 	 
 	    $question = $this->question->findById($id);
 	    $comments = $this->question->findComments($id);
+	   	$tags = $this->question->findTags($id);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('question/view_question', [
-	        'question' => $question,
-	        'comments' => $comments,
+	        'question' 	=> $question,
+	        'comments' 	=> $comments,
+	        'tags'		=> $tags,
 	    ]);
 
 	   	$this->dispatcher->forward([
@@ -52,6 +59,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 		foreach($all as $q) {
 
 			$q->answersCount = $this->question->countAnswers($q->id);
+			$q->tags = $tags = $this->question->findTags($q->id);
 
 		}
 	 
@@ -77,6 +85,13 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 				'required'    => true,
 				'validation'  => ['not_empty'],
 			],
+			'tags' => [
+				'type'        => 'text',
+				'label'       => 'Tags',
+				'required'    => true,
+				'validation'  => ['not_empty'],
+				'placeholder' => 'Comma separated list.',
+			],
 			'content' => [
 				'type'        => 'textarea',
 				'label'       => 'Content',
@@ -96,6 +111,10 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 				        'cat_id' 	=> $this->auth->userid(),
 				        'created' 	=> $now,
 				    ]);
+
+				    $lastQuestionID = $this->db->lastInsertId();
+
+				    $this->question->addTags($form->Value('tags'), $lastQuestionID);
 
 					return true;
 				}
