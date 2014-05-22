@@ -72,10 +72,13 @@ class CResponseBasic
      *
      * @param string $url to redirect to
      *
+     * Always Exit() > reason http://thedailywtf.com/Articles/WellIntentioned-Destruction.aspx
+     *
      * @return $this
      */
     public function redirect($url)
     {
         header('Location: ' . $url);
+        exit();
     }
 }
