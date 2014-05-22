@@ -8,14 +8,15 @@ TODO
 ==========
 
 - [ ] Add Ajax support for VoteController
-- [ ] Build Up Comments, Answers and Questsions Section
+- [x] Build Up Comments, Answers and Questsions Section
 - [ ] Implement Groups
 	- [ ] Permissions
 	- [ ] Better Auth
-- [ ] Implement Tagging
+- [x] Implement Tagging
 - [ ] Clean Up Code
 
 
 Notes
 =====================
 Remember to change newActions() cat_id
+

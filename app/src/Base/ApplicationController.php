@@ -8,7 +8,8 @@ namespace nuvalis\Base;
  */
 class ApplicationController implements \Anax\DI\IInjectionAware
 {
-    use \Anax\DI\TInjectable;
+    use \Anax\DI\TInjectable,
+    	\Anax\MVC\TRedirectHelpers;
 
 	public function initialize()
 	{

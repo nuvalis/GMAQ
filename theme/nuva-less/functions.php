@@ -29,8 +29,9 @@ function themeLinks() {
 
 	$baseUrl = dirname($url) . "/theme/" . basename(dirname(__FILE__));
 
-	$link = '<link rel="stylesheet" type="text/css" href="' . $baseUrl . "/stylephp/style.php" . '">';
-	// $link .= '<script src="' . $baseUrl . "/js/less.min.js" . '"></script>';
+	//$link = '<link rel="stylesheet" type="text/css" href="' . $baseUrl . "/stylephp/style.php" . '">';
+	$link = '<link rel="stylesheet/less" type="text/css" href="' . $baseUrl . "/css/main.less" . '">';
+	$link .= '<script src="' . $baseUrl . "/js/less.min.js" . '"></script>';
 	$link .= '<script src="' . $baseUrl . "/js/theme.js" . '"></script>';
 	return $link;
 

@@ -80,7 +80,7 @@ class Questions extends \Anax\MVC\BaseModel
  	public function findComments($questionID) 
  	{
 
-	$this->db->select("c.content, u.username, u.email")
+	$this->db->select("c.content, c.created, u.username, u.email, u.id AS user_id")
         ->from("comments AS c")
        	->where("questions_id = ?")
        	->join("user AS u", "u.id = c.user_id");

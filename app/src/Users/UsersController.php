@@ -43,12 +43,41 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $this->users = new \Anax\Users\User();
 	    $this->users->setDI($this->di);
 	 
-	    $user = $this->users->find($id);
+	    $user = $this->users->findById($id);
 	 
 	    $this->theme->setTitle("View user with id");
 	    $this->views->add('users/view', [
 	        'user' => $user,
 	    ]);
+	}
+
+	public function privateAction($id)
+	{
+		if (!$this->auth->userId() == $id){ $id = $this->auth->userId()); }
+	    $this->users = new \Anax\Users\User();
+	    $this->users->setDI($this->di);
+	 
+	    $user = $this->users->findById($id);
+	 
+	    $this->theme->setTitle("View user with id");
+	    $this->views->add('users/view', [
+	        'user' => $user,
+	    ]);
+	}
+
+	public function publicAction($id)
+	{
+
+		$this->users = new \Anax\Users\User();
+	    $this->users->setDI($this->di);
+	 
+	    $user = $this->users->findById($id);
+	 
+	    $this->theme->setTitle("View user with id");
+	    $this->views->add('users/view', [
+	        'user' => $user,
+	    ]);
+
 	}
 
     /**
@@ -77,15 +106,15 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	 *
 	 * @return void
 	 */
-	public function addAction()
+	public function registerAction()
 	{
 
 		$form = $this->form;
 
 		$form = $form->create([], [
-			'acronym' => [
+			'username' => [
 				'type'        => 'text',
-				'label'       => 'Acronym',
+				'label'       => 'Username',
 				'required'    => true,
 				'validation'  => ['not_empty'],
 			],
@@ -94,6 +123,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 				'label'       => 'Password',
 				'required'    => true,
 				'validation'  => ['not_empty'],
+			],
+			'password_confirm' => [
+				'type'        => 'password',
+				'label'       => 'Password Confirm',
+				'required'    => true,
+				'validation'  => ['not_empty', 'custom_test' => array('message' => 'The password does not match.',
+				'test' => 'return $form->Value("password") == $form->Value("password_confirm");')],
 			],
 			'name' => [
 				'type'        => 'text',
@@ -113,7 +149,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 					$now = date(DATE_RFC2822);
 			 
 				    $this->users->save([
-				        'acronym' 	=> $form->Value('acronym'),
+				        'username' 	=> $form->Value('username'),
 				        'email' 	=> $form->Value('email'),
 				        'name' 		=> $form->Value('name'),
 				        'password' 	=> password_hash($form->Value('password'), PASSWORD_BCRYPT),
@@ -132,7 +168,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 		if ($status === true) {
 		 
-		    $url = $this->url->create('users/id/' . $this->users->id);
+		    $url = $this->url->create('users/id/' . $this->db->lastInsertId());
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
@@ -164,15 +200,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 		$form = $this->form;
 
-		$user = $this->users->find($id);
-
 		$form = $form->create([], [
-			'acronym' => [
+			'username' => [
 				'type'        => 'text',
-				'label'       => 'Acronym',
+				'label'       => 'Username',
 				'required'    => true,
 				'validation'  => ['not_empty'],
-				'value' => $user->acronym,
+				'value' => $user->username,
 			],
 			'name' => [
 				'type'        => 'text',
@@ -189,13 +223,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 			],
 			'submit' => [
 				'type'      => 'submit',
-				'callback'  => function($form) use ($user) {
+				'callback'  => function($form) {
 
 					$now = date(DATE_RFC2822);
 
 				    $this->users->save([
-				    	'id'		=> $user->id,
-				        'acronym' 	=> $form->Value('acronym'),
+				    	'id'		=> $this->auth->userId(),
+				        'username' 	=> $form->Value('username'),
 				        'email' 	=> $form->Value('email'),
 				        'name' 		=> $form->Value('name'),
 				        'updated' 	=> $now,
@@ -213,7 +247,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 		if ($status === true) {
 		 	$this->flash->success("Changes has been saved!");
-		    $url = $this->url->create('users/id/' . $user->id);
+		    $url = $this->url->create('users/id/' . $this->auth->userId());
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
@@ -244,8 +278,6 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 		$form = $this->form;
 
-		$user = $this->users->find($id);
-
 		$form = $form->create([], [
 
 			'password' => [
@@ -255,15 +287,23 @@ class UsersController extends \nuvalis\Base\ApplicationController
 				'validation'  => ['not_empty'],
 				'placeholder' => 'New Password',
 			],
+			'password_confirm' => [
+				'type'        => 'password',
+				'label'       => 'Password Confirm',
+				'required'    => true,
+				'validation'  => ['not_empty', 'custom_test' => array('message' => 'The password does not match.',
+				'test' => 'return $form->Value("password") == $form->Value("password_confirm");')],
+				'placeholder' => 'Confirm Password',
+			],
 
 			'submit' => [
 				'type'      => 'submit',
-				'callback'  => function($form) use ($user) {
+				'callback'  => function($form) {
 
 					$now = date(DATE_RFC2822);
 
 				    $this->users->save([
-				    	'id'		=> $user->id,
+				    	'id'		=> $this->auth->userId(),
 				        'password' 	=> password_hash($form->Value('password'), PASSWORD_BCRYPT),
 				        'updated' 	=> $now,
 				        'active' 	=> $now,
@@ -281,7 +321,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		if ($status === true) {
 		 	
 		 	$this->flash->success("New password has been saved!");
-		    $url = $this->url->create('users/id/' . $user->id);
+		    $url = $this->url->create('users/id/' . $this->auth->userId());
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
@@ -413,41 +453,103 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    ]);
 	}
 
-	public function loginAction($user, $pass) 
+	public function loginAction() 
 	{
-		$_POST["username"] = $user;
-		$_POST["password"] = $pass;
 
-		$user = $this->users->findByUsername($_POST["username"]);
+		if($this->auth->userId()){
 
-		$hash = $user->password;
-
-		$check = password_verify($_POST["password"], $hash);
-
-		if($check === true) {
-			
-			$_SESSION["auth"]["username"] = $user->username;
-			$_SESSION["auth"]["userid"] = $user->id;
-			$this->flashy->success("You are now logged in");
-			$this->response->redirect("");
-
-		} else {
-
-			$this->flashy->error("Could not login");
-			$this->response->redirect("");
+			$this->flashy->warning('You are already logged in.');
 
 		}
+
+
+		$form = $this->form;
+
+		$form = $form->create([], [
+			'username' => [
+				'type'        => 'text',
+				'label'       => 'Username',
+				'required'    => true,
+				'validation'  => ['not_empty'],
+			],
+			'password' => [
+				'type'        => 'password',
+				'label'       => 'Password',
+				'required'    => true,
+				'validation'  => ['not_empty'],
+			],
+			'submit' => [
+				'type'      => 'submit',
+				'callback'  => function($form) {
+
+					$user = $this->users->findByUsername($form->Value('username'));
+
+					$hash = $user->password;
+
+					$check = password_verify($form->Value('password'), $hash);
+
+					if($check === true) {
+
+						$now = date(DATE_RFC2822);
+						 
+						$this->users->save([
+							'id'		=> $user->id,
+							'active' 	=> $now,
+						]);
+						
+						$_SESSION["auth"]["username"] = $user->username;
+						$_SESSION["auth"]["userid"] = $user->id;
+						$this->flashy->success("You are now logged in");
+
+						return true;
+
+					}
+
+					return false;
+				}
+			],
+
+		]);
+
+		// Check the status of the form
+		$status = $form->check();
+
+		if ($status === true) {
+		 
+		    $url = $this->url->create('users/id/' . $this->auth->userId());
+		    $this->response->redirect($url);
+		
+		} else if ($status === false) {
+		
+			// What to do when form could not be processed?
+			$form->AddOutput("<p><i>Username or Password is wrong. Try again.</i></p>");
+			header("Location: " . $_SERVER['PHP_SELF']);
+		}
+
+		$this->theme->setTitle("Add user");
+		$this->views->add('nuva/test', [
+			'title' => "Try out a form using CForm",
+			'form' => $form->getHTML()
+		]);
+
+
 
 	}
 
 	public function logoutAction() 
 	{
+		$this->users->save([
+				'id'		=> $this->auth->userid(),
+				'active' 	=> $now,
+		]);
 
 		session_destroy();
 		unset($_SESSION);
 
+		session_start();
+
 		$this->flashy->error("Logged Out");
-		$this->response->redirect("");
+		$this->response->redirect("login");
 
 		return true;
 		
@@ -458,15 +560,15 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		if($this->auth->userId()){
 
 			$this->flashy->success("Status: Logged In as " . $this->auth->username());
+			$this->redirectTo("");
 
 
 		} else {
 
 			$this->flashy->warning("Status: Logged Out");
+			$this->redirectTo("");
 
 		}
-
-		$this->indexAction();
 
 	}
 	 
