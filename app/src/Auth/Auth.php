@@ -4,7 +4,7 @@ namespace nuvalis\Auth;
  
 class Auth {
 
-	use \Anax\DI\TInjectable
+	use \Anax\DI\TInjectable,
 		\Anax\MVC\TRedirectHelpers;
 	
 	public function __construct() 
@@ -25,8 +25,7 @@ class Auth {
 		{
 			return true;
 		} else {
-			$this->flashy->error("You must login to use this service.");
-			$this->redirectTo("users/login");
+			return false;
 		}
 
 	}

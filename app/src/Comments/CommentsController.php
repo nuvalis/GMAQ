@@ -19,7 +19,7 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 	public function newAction($target, $ID)
 	{
 
-		$this->auth->isLoggedIn();
+		$this->isLoggedIn();
 		
  		$form = $this->form;
 

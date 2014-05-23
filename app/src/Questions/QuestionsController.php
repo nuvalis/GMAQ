@@ -79,7 +79,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	public function newAction()
 	{
 
-		$this->auth->isLoggedIn();
+		$this->isLoggedIn();
 
  		$form = $this->form;
 

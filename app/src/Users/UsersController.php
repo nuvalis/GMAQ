@@ -40,41 +40,48 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	 */
 	public function idAction($id = null)
 	{
-	    $this->users = new \Anax\Users\User();
-	    $this->users->setDI($this->di);
 	 
-	    $user = $this->users->findById($id);
-	 
-	    $this->theme->setTitle("View user with id");
-	    $this->views->add('users/view', [
-	        'user' => $user,
-	    ]);
+		if($id === $this->auth->userId()){
+
+			$this->privateAction($id);
+
+		} else {
+
+			$this->publicAction($id);
+
+		}
+
 	}
 
 	public function privateAction($id)
 	{
 		if (!$this->auth->userId() == $id){ $id = $this->auth->userId(); }
-	    $this->users = new \Anax\Users\User();
-	    $this->users->setDI($this->di);
 	 
 	    $user = $this->users->findById($id);
+
+	    $user->latestComments = $this->users->latestComments($id);
+	    $user->latestAnswers = $this->users->latestAnswers($id);
+	    $user->latestQuestions = $this->users->latestQuestions($id);
+	   
 	 
-	    $this->theme->setTitle("View user with id");
-	    $this->views->add('users/view', [
+	    $this->theme->setTitle("Your private profile");
+	    $this->views->add('users/public', [
 	        'user' => $user,
 	    ]);
 	}
 
 	public function publicAction($id)
 	{
-
-		$this->users = new \Anax\Users\User();
-	    $this->users->setDI($this->di);
 	 
 	    $user = $this->users->findById($id);
+	    
+	    $user->latestComments = $this->users->latestComments($id);
+	    $user->latestAnswers = $this->users->latestAnswers($id);
+	    $user->latestQuestions = $this->users->latestQuestions($id);
+	    
 	 
-	    $this->theme->setTitle("View user with id");
-	    $this->views->add('users/view', [
+	    $this->theme->setTitle("Public Profile");
+	    $this->views->add('users/public', [
 	        'user' => $user,
 	    ]);
 

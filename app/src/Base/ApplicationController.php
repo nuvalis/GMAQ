@@ -18,5 +18,11 @@ class ApplicationController implements \Anax\DI\IInjectionAware
 	    $this->theme->setTitle("Application");
 	}
 
+	protected function isLoggedIn() {
+		if(!$this->auth->isLoggedIn()) {
+			$this->redirectTo("users/login");
+		}
+	}
+
 	 
 }

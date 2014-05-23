@@ -48,7 +48,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	public function newAction($questionID)
 	{
 
-		$this->auth->isLoggedIn();
+		$this->isLoggedIn();
 
  		$form = $this->form;
 

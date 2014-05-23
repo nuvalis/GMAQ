@@ -24,5 +24,41 @@ class User extends \Anax\MVC\BaseModel
 	    return $this->db->fetchInto($this);
 	}
 
+	public function latestAnswers($uid)
+	{
+
+		$this->db->select()
+	        ->from("answers")
+	        ->where("user_id = ?")->orderby("created DESC")->limit(5);
+	 
+	    $this->db->execute([$uid]);
+	    return $this->db->fetchAll();
+
+	}
+
+	public function latestQuestions($uid)
+	{
+
+		$this->db->select()
+	        ->from("questions")
+	        ->where("user_id = ?")->orderby("created DESC")->limit(5);
+	 
+	    $this->db->execute([$uid]);
+	    return $this->db->fetchAll();
+		
+	}
+
+	public function latestComments($uid)
+	{
+
+		$this->db->select()
+	        ->from("comments")
+	        ->where("user_id = ?")->orderby("created DESC")->limit(5);
+	 
+	    $this->db->execute([$uid]);
+	    return $this->db->fetchAll();
+		
+	}
+
  
 }
