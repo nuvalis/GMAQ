@@ -73,9 +73,26 @@ class Questions extends \Anax\MVC\BaseModel
 
 	$this->db->execute($sql, [$questionID]);
 	$this->db->setFetchModeClass(__CLASS__);
-	return$this->db->fetchAll();
+	return $this->db->fetchAll();
 
  	}
+
+ 	public function findByTag($tag)
+	{
+
+	 	$sql = "SELECT DISTINCT *
+			    FROM questions q
+			        INNER JOIN questions_tag_ref qtr
+			            ON q.id = qtr.questions_id
+			        INNER JOIN tags t
+			            ON qtr.tag_id = t.tag_id
+			    WHERE t.tag_name = ?";
+
+		$this->db->execute($sql, [$tag]);
+		$this->db->setFetchModeClass(__CLASS__);
+		return $this->db->fetchAll();
+
+	}
 
  	public function findComments($questionID) 
  	{

@@ -11,21 +11,44 @@ class TagsController extends \nuvalis\Base\ApplicationController
 
 	public function initialize()
 	{
-	    $this->tags = new \Anax\Tags\Tags();
+	    $this->tags = new \nuvalis\Tags\Tags();
 	    $this->tags->setDI($this->di);
+	    $this->question = new \nuvalis\Questions\Questions();
+	    $this->question->setDI($this->di);
+	    $this->votes = new \nuvalis\Votes\Votes();
+	    $this->votes->setDI($this->di);
 	    $this->theme->setTitle("Tags");
 	}
 
 	public function indexAction()
 	{
 
-		$this->listAction();
+		$all = $this->tags->findAll();
+
+		$this->theme->setTitle("List all Tags");
+	    $this->views->add('tags/list_tags', [
+	        'tags' => $all,
+	    ]);
 
 	}
 
-	public function listAction()
+	public function findAction($tag)
 	{
-		
+		$all = $this->question->findByTag($tag);
+
+		foreach($all as $q) {
+
+			$q->answersCount = $this->question->countAnswers($q->questions_id);
+			$q->tags 		 = $this->question->findTags($q->questions_id);
+			$q->votes 		 = $this->votes->calcVotes("questions", $q->questions_id);
+
+		}
+	 
+		$this->theme->setTitle("List all Questions");
+	    $this->views->add('question/list_questions', [
+	        'questions' => $all,
+	        'title' => "View Questions By Tag " . $tag,
+	    ]);
 	}
 
 	public function addAction() 

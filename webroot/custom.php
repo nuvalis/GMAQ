@@ -59,6 +59,12 @@
 	    return $controller;
 	});
 
+	$di->set('TagsController', function() use ($di) {
+	    $controller = new \nuvalis\Tags\TagsController();
+	    $controller->setDI($di);
+	    return $controller;
+	});
+
 	$di->set('UsersController', function() use ($di) {
     	$controller = new \Anax\Users\UsersController();
     	$controller->setDI($di);

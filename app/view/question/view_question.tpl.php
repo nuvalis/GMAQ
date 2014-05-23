@@ -1,22 +1,25 @@
 <h1><?= $question->title ?></h1>
 
 <div class="question" data-questionsID="<?= $question->id ?>">
-	<p><?php if ($question->views === 0){echo "0";}else{echo $question->views;} ?> views </p>
-	<p><?php if ($votes == 0){echo "0";}else{echo $votes;} ?> vote value </p>
+
+	<p class="content clear">
+		<?= $question->content ?>
+	</p>
+
+	<p class="views">Views <br><br> <?php if ($question->views === 0){echo "0";}else{echo $question->views;} ?></p>
+	<p class="votes">Votes <br><br> <?php if ($votes == 0){echo "0";}else{echo $votes;} ?></p>
 	
 	<?php if (isset($tags)): ?>
 		<div class="tags">
 			<?php foreach ($tags as $tag): ?>
-				<a href="<?= $this->url->create('tags/' . $tag->tag_name); ?>" class="tag-link"><?= $tag->tag_name; ?></a>
+				<a href="<?= $this->url->create('tags/find/' . $tag->tag_name); ?>" class="tag-link"><?= $tag->tag_name; ?></a>
 			<?php endforeach ?>
 		</div>
 	<?php endif ?>
 
-	<p>
-	<?= $question->content ?>
-	</p>
 
-	<h3>Comments</h3>
+
+	<h3 class="clear">Comments</h3>
 	<div class="comments">
 	<?php if ($comments): ?>
 	

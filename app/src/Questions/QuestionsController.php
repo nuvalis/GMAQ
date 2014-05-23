@@ -75,7 +75,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	    ]);
 
 	}
-
+	
 	public function newAction()
 	{
 
