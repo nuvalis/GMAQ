@@ -27,7 +27,7 @@
 				
 			<div class="comment-post">
 				<a class="comment-gravatar" href="<?= $this->url->create('users/id/' . $comment->user_id) ?>">
-					<img class="gravatar" src="<?= $this->mzHelpers->get_gravatar($comment->email, 40); ?>" alt="">
+					<img class="gravatar" src="<?= $this->mzHelpers->get_gravatar($comment->email, 64); ?>" alt="">
 				</a>
 
 				<div class="content-main">
