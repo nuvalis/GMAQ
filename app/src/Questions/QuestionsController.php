@@ -13,6 +13,8 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	{
 	    $this->question = new \nuvalis\Questions\Questions();
 	    $this->question->setDI($this->di);
+	   	$this->votes = new \nuvalis\Votes\Votes();
+	    $this->votes->setDI($this->di);
 	    $this->theme->setTitle("Questions");
 	}
 
@@ -34,12 +36,14 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	    $question = $this->question->findById($id);
 	    $comments = $this->question->findComments($id);
 	   	$tags = $this->question->findTags($id);
+	   	$votes = $this->votes->calcVotes("questions", $id);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('question/view_question', [
 	        'question' 	=> $question,
 	        'comments' 	=> $comments,
 	        'tags'		=> $tags,
+	        'votes'		=> $votes
 	    ]);
 
 	   	$this->dispatcher->forward([
@@ -59,7 +63,8 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 		foreach($all as $q) {
 
 			$q->answersCount = $this->question->countAnswers($q->id);
-			$q->tags = $tags = $this->question->findTags($q->id);
+			$q->tags 		 = $this->question->findTags($q->id);
+			$q->votes 		 = $this->votes->calcVotes("questions", $q->id);
 
 		}
 	 

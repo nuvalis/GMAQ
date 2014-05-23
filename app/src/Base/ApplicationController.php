@@ -17,5 +17,6 @@ class ApplicationController implements \Anax\DI\IInjectionAware
 	    $this->posts->setDI($this->di);
 	    $this->theme->setTitle("Application");
 	}
+
 	 
 }

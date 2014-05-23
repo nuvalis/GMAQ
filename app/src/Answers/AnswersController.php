@@ -15,6 +15,8 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	    $this->answers->setDI($this->di);
 	    $this->question = new \nuvalis\Questions\Questions();
 	    $this->question->setDI($this->di);
+	    $this->votes = new \nuvalis\Votes\Votes();
+	    $this->votes->setDI($this->di);
 	    $this->theme->setTitle("Application");
 	}
 
@@ -109,6 +111,12 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	{
 
 	    $answers = $this->answers->findAnswers($id);
+
+	    foreach ($answers as $a) {
+
+	    	$a->votes = $this->votes->calcVotes("answers", $a->id);
+
+	    }
 	 
 	    $this->theme->setTitle("Answers");
 	    $this->views->add('answers/view_answers', [

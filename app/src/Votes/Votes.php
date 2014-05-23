@@ -86,8 +86,7 @@ class Votes extends \Anax\MVC\BaseModel
  		$this->db->select("SUM(vote_value) AS votes_sum")->from("votes")->where($target . "_id = ?");
  		$this->db->execute([$id]);
 
- 		$res = $this->db->fetchAll();
- 		$res = $res[0];
+ 		$res = $this->db->fetchOne();
 
  		return $res->votes_sum;
 

@@ -53,7 +53,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 	public function privateAction($id)
 	{
-		if (!$this->auth->userId() == $id){ $id = $this->auth->userId()); }
+		if (!$this->auth->userId() == $id){ $id = $this->auth->userId(); }
 	    $this->users = new \Anax\Users\User();
 	    $this->users->setDI($this->di);
 	 

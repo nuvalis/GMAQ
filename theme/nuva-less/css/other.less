@@ -125,13 +125,46 @@ th, tr, td {
 	padding: 1em;
 }
 
-.question .views, .question .answers {
+.question .views, .question .answers, .question .votes {
 	.column(1);
 	text-align: center;
 }
 
 .question .title-front {
-	.column(10);
+	.column(9);
 	font-size: 110%;
 	padding-left: 1em;
+}
+.question .tags {
+	.column(9);
+	padding-left: 1em;
+
+	.tag-link {
+		background: rgba(0, 0, 0, 0.2);
+		padding: 0.3em;
+		.border-radius(4px);
+	}
+}
+
+.answer {
+	margin-top: 4em;
+}
+
+.answer .answer-votes {
+	.column(1);
+	text-align: center;
+	font-size: 150%;
+}
+
+.answer .title, .answer .content {
+	.column(12);
+}
+
+.answer .content {
+	margin-left: 0.3em;
+}
+
+.answer-group {
+	.column(11);
+	padding-top: 0.3em;
 }

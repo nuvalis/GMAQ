@@ -4,10 +4,15 @@
 	<?php if($answers) : ?>
 	<?php foreach($answers as $answer) : ?>
 
-		<div class="answer-<?= $answer->id ?>" data-answersID="<?= $answer->id ?>">
-			<h2><?= $answer->title ?></h2>
+		<div class="answer answer-<?= $answer->id ?>" data-answersID="<?= $answer->id ?>">
 
-			<p><?= $answer->content ?></p> 
+			<p class="answer-votes">Votes <br><br> <?php if($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?></p>
+			<div class="answer-group">
+				<h2 class="title"><?= $answer->title ?></h2>
+				<p class="answer-content"><?= $answer->content ?></p>
+			</div>
+
+			
 
 			<?php
 
@@ -21,7 +26,7 @@
 
 			?>
 
-			<h3>Comments</h3>
+			<h3 class="clear">Comments</h3>
 			<div class="comments">
 
 			<?php if ($comments): ?>

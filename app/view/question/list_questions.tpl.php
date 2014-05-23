@@ -1,6 +1,12 @@
 <h1>Todays Quests</h1>
 <?php foreach($questions as $question) : ?>
 	<div class="question">
+
+		<div class="votes">
+			<p>Votes</p>
+			<?php if ($question->votes == 0){echo "0";} else {echo $question->votes;} ?>
+		</div>
+
 		<div class="views">
 			<p>Views</p>
 			<?php if ($question->views == 0){echo "0";} else {echo $question->views;} ?>

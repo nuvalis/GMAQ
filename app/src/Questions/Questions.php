@@ -103,14 +103,14 @@ class Questions extends \Anax\MVC\BaseModel
  	public function countAnswers($id) 
  	{
 
-	 	$this->db->select("COUNT()")
+	 	$this->db->select("COUNT() AS count")
 		    ->from('answers')
 		    ->where("questions_id = ?");
 
 		$this->db->execute([$id]);
-		$res = $this->db->fetchAll();
-		$res = (array) $res[0];
-		return $res = (string) $res["COUNT()"];
+		$res = $this->db->fetchOne();
+		
+		return $res->count;
 
  	}
 

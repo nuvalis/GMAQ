@@ -2,6 +2,7 @@
 
 <div class="question" data-questionsID="<?= $question->id ?>">
 	<p><?php if ($question->views === 0){echo "0";}else{echo $question->views;} ?> views </p>
+	<p><?php if ($votes == 0){echo "0";}else{echo $votes;} ?> vote value </p>
 	
 	<?php if (isset($tags)): ?>
 		<div class="tags">
@@ -46,8 +47,9 @@
 	<?php endif ?>
 	</div>
 
+	<p><a href="<?= $this->url->create('comments/new/questions/' . $question->id); ?>">Comment this Question</a></p>
+
 
 </div>
-<p><a href="<?= $this->url->create('comments/new/questions/' . $question->id); ?>">Comment this Question</a></p>
-<hr>
+
 
