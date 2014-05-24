@@ -197,3 +197,35 @@ table, tbody, td, tr, th {
 .gravatar {
 	.border-radius(50%)
 }
+
+#question-box, #answers-box {
+	.column(7);
+}
+
+#question-box .tags {
+	margin-top: 1.5em;
+}
+
+@arrow: 12px;
+
+.vote-up, .vote-down {
+	margin: 0.5em;
+}
+
+.vote-up {
+	width: 0; 
+	height: 0; 
+	border-left: @arrow solid transparent;
+	border-right: @arrow solid transparent;
+	
+	border-bottom: @arrow solid rgba(0, 0, 0, 0.5);
+}
+
+.vote-down {
+	width: 0; 
+	height: 0; 
+	border-left: @arrow solid transparent;
+	border-right: @arrow solid transparent;
+	
+	border-top: @arrow solid rgba(0, 0, 0, 0.5);
+}

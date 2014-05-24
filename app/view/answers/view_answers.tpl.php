@@ -1,37 +1,33 @@
-<h1>Answers</h1>
-<div class="answers">
 
+<div id="answers-box" class="answers">
+<h1>Answers</h1>
 	<?php if($answers) : ?>
 	<?php foreach($answers as $answer) : ?>
 
 		<div class="answer answer-<?= $answer->id ?>" data-answersID="<?= $answer->id ?>">
 
-			<p class="answer-votes">Votes <br><br> <?php if($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?></p>
+			
 			<div class="answer-group">
 				<h2 class="title"><?= $answer->title ?></h2>
-				<p class="answer-content"><?= $answer->content ?></p>
+				<div class="answer-content"><?= $this->textFilter->markdown($answer->content) ?></div>
 			</div>
 
-			
-
-			<?php
-
-				$this->db->select("c.content, c.created, u.username, u.email, u.id AS user_id")
-			        ->from("comments AS c")
-			       	->where("answers_id = ?")
-			       	->join("user AS u", "u.id = c.user_id");
-
-			    $this->db->execute([$answer->id]);
-			    $comments = $this->db->fetchAll();
-
-			?>
+			<div class="answer-votes">Votes
+				<a href="<?= $this->url->create("votes/up/answers/" . $answer->id) ?>">
+					<div class="vote-up"></div>
+				</a>
+				<?php if ($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?>
+				<a href="<?= $this->url->create("votes/down/answers/" . $answer->id) ?>">
+					<div class="vote-down"></div>
+				</a>
+			</div>
 
 			<h3 class="clear">Comments</h3>
 			<div class="comments">
 
-			<?php if ($comments): ?>
+			<?php if ($answer->comment): ?>
 
-				<?php foreach($comments as $comment) : ?>
+				<?php foreach($answer->comment as $comment) : ?>
 						
 					<div class="comment-post">
 						<a class="comment-gravatar" href="<?= $this->url->create('users/id/' . $comment->user_id) ?>">
@@ -45,7 +41,7 @@
 
 							<span class="comment-date">Comment posted at <?= date("Y-m-d H:i", strtotime($comment->created)); ?></span>
 							
-							<p class="comment-content"><?= $comment->content ?></p>
+							<div class="comment-content"><?= $this->textFilter->markdown($comment->content) ?></div>
 						</div>	
 					</div>
 
@@ -68,6 +64,6 @@
 		<h3>No answers yet. Be the first one!</h3>
 	
 	<?php endif; ?>
-
-</div>
 <p><a href="<?= $this->url->create('answers/new/' . $questionID); ?>">New Answer</a></p>
+</div>
+

@@ -23,12 +23,9 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	public function idAction($id)
 	{
 
-		$this->auth->isLoggedIn();
-
 		$parent = $this->answers->getAnswerParent($id);
 	 
-	    $question = $this->question->findById($parent);
-	    $answers = $this->question->findAnswers($parent);
+		$this->redirectTo('questions/id/' . $parent);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('question/view_question', [
@@ -115,6 +112,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	    foreach ($answers as $a) {
 
 	    	$a->votes = $this->votes->calcVotes("answers", $a->id);
+	    	$a->comment = $this->answers->getAnswersComments($a->id);
 
 	    }
 	 

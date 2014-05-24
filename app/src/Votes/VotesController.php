@@ -23,14 +23,18 @@ class VotesController extends \nuvalis\Base\ApplicationController
 
 	public function upAction($target, $id)
 	{
-		$this->auth->isLoggedIn();
+		$this->isLoggedIn();
 		$this->votes->voteUp($id, $this->auth->userId(), $target);
+
+		$this->redirectTo($target .'/id/'. $id);
 	}
 
 	public function downAction($target, $id)
 	{
-		$this->auth->isLoggedIn();
+		$this->isLoggedIn();
 		$this->votes->voteDown($id, $this->auth->userId(), $target);
+		
+		$this->redirectTo($target .'/id/'. $id);
 	 
 	}
 

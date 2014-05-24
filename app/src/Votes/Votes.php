@@ -11,7 +11,7 @@ class Votes extends \Anax\MVC\BaseModel
 
  	public function voteUp($postid, $userId, $target) 
  	{
- 		$this->checkVoteExist($postid, $userId, $target);
+ 		if(!$this->checkVoteExist($postid, $userId, $target)) {return false;}
  		
  		$now = date(DATE_RFC2822);
 
@@ -22,11 +22,13 @@ class Votes extends \Anax\MVC\BaseModel
 		'created'			=> $now
 		]);
 
+		$this->flashy->success("Voted successfully");
+
  	}
 
  	public function voteDown($postid, $userId, $target) 
  	{
- 		$this->checkVoteExist($postid, $userId, $target);
+ 		if(!$this->checkVoteExist($postid, $userId, $target)) {return false;}
 
  		$now = date(DATE_RFC2822);
 
@@ -36,6 +38,8 @@ class Votes extends \Anax\MVC\BaseModel
 		'vote_value'		=> "-1",
 		'created'			=> $now
 		]);
+
+		$this->flashy->success("Voted successfully");
  		
  	}
 
@@ -45,7 +49,8 @@ class Votes extends \Anax\MVC\BaseModel
  		$this->checkPostExist($postid, $target);
 
  		if($userId == false) {
- 			throw new \Exception("You can't vote without a user id.", 1);
+ 			$this->flashy->error("You can't vote without a user id.");
+ 			return false;
  		}
 
  		$this->db->select()->from($this->getSource())
@@ -57,10 +62,11 @@ class Votes extends \Anax\MVC\BaseModel
 	    $res = $this->db->fetchAll();
 
  		if($res) {
-
- 			throw new \Exception("You have voted once", 1);
-
+ 			$this->flashy->warning("You have voted once on this post.");
+ 			return false;
  		}
+
+ 		return true;
 
  	}
 

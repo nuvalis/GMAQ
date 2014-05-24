@@ -1,13 +1,16 @@
+<div id="question-box" class="question" data-questionsID="<?= $question->id ?>">
 <h1><?= $question->title ?></h1>
 
-<div class="question" data-questionsID="<?= $question->id ?>">
-
-	<p class="content clear">
-		<?= $question->content ?>
-	</p>
-
-	<p class="views">Views <br><br> <?php if ($question->views === 0){echo "0";}else{echo $question->views;} ?></p>
-	<p class="votes">Votes <br><br> <?php if ($votes == 0){echo "0";}else{echo $votes;} ?></p>
+	<div class="views">Views <br><br> <?php if ($question->views === 0){echo "0";} else {echo $question->views;} ?></div>
+	<div class="votes">Votes
+		<a href="<?= $this->url->create("votes/up/questions/" . $question->id) ?>">
+			<div class="vote-up"></div>
+		</a>
+		<?php if ($votes == 0){echo "0";} else {echo $votes;} ?>
+		<a href="<?= $this->url->create("votes/down/questions/" . $question->id) ?>">
+			<div class="vote-down"></div>
+		</a>
+	</div>
 	
 	<?php if (isset($tags)): ?>
 		<div class="tags">
@@ -17,7 +20,9 @@
 		</div>
 	<?php endif ?>
 
-
+	<div class="content clear">
+		<?= $this->textFilter->markdown($question->content) ?>
+	</div>
 
 	<h3 class="clear">Comments</h3>
 	<div class="comments">
@@ -37,7 +42,7 @@
 
 					<span class="comment-date">Comment posted at <?= date("Y-m-d H:i", strtotime($comment->created)); ?></span>
 					
-					<p class="comment-content"><?= $comment->content ?></p>
+					<div class="comment-content"><?= $this->textFilter->markdown($comment->content) ?></div>
 				</div>	
 			</div>
 
