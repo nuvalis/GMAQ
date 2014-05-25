@@ -3,6 +3,12 @@
 	<p>Username: <?= $user->username ?></p>
 	<p>Status: <?php if($user->deleted !=  null) {echo "<span class='softdelete'>Deleted</span>";} else {echo "<span class='green-active'>Active</span>";} ?></p>
 	<p>Last Activity: <?= $user->active ?></p>
+
+	<p>Points: <?=  $user->points->points ?> <br> 
+	Answers: <?= $user->points->answers ?> <br>
+	Comments: <?= $user->points->comments ?> <br> 
+	Questions: <?= $user->points->questions ?> <br> 
+	Votes: <?= $user->points->votes ?></p>
 </div>
 
 <div class="latest-questions">
@@ -31,6 +37,7 @@
 <h3>Latest Comments</h3>
 <?php if ($user->latestComments): ?>
 	<?php foreach($user->latestComments as $comment) : ?>
+
 		<?php if (isset($comment->questions_id)): ?>
 			<p><a href="<?= $this->url->create('questions/id/' . $comment->questions_id); ?>"><?= substr($comment->content, 0, 140); ?></a></p>
 		<?php elseif(isset($comment->answers_id)): ?>

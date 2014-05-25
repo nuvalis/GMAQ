@@ -62,8 +62,8 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $user->latestComments = $this->users->latestComments($id);
 	    $user->latestAnswers = $this->users->latestAnswers($id);
 	    $user->latestQuestions = $this->users->latestQuestions($id);
-	   
-	 
+	   	$user->points = $this->users->userPoints($id);
+
 	    $this->theme->setTitle("Your private profile");
 	    $this->views->add('users/public', [
 	        'user' => $user,
@@ -78,8 +78,8 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $user->latestComments = $this->users->latestComments($id);
 	    $user->latestAnswers = $this->users->latestAnswers($id);
 	    $user->latestQuestions = $this->users->latestQuestions($id);
-	    
-	 
+	    $user->points = $this->users->userPoints($id);
+
 	    $this->theme->setTitle("Public Profile");
 	    $this->views->add('users/public', [
 	        'user' => $user,
