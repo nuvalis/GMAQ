@@ -578,5 +578,15 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		}
 
 	}
+
+	public function topUsersAction()
+	{
+		$user = $this->users->topUsers();
+
+		$this->views->add('users/toplist', [
+	        'users' => $user,
+	    ], 'sidebar');
+
+	}
 	 
 }

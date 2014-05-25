@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <script src='<?=$this->url->asset($modernizr)?>'></script>
 <script type="text/javascript">
-window.base_url = "<?php echo $this->url->create(''); ?>";
+	window.base_url = "<?php echo $this->url->create(''); ?>";
 </script>
 
 <?= themeLinks(); ?>

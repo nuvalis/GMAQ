@@ -20,7 +20,7 @@ class Comments extends \Anax\MVC\BaseModel
 		$sql = "SELECT DISTINCT *
 				FROM comments c
 				ORDER BY c.created DESC
-				LIMIT 5";
+				LIMIT 3";
 
 		$this->db->execute($sql);
 		return $this->db->fetchAll();

@@ -25,11 +25,6 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 
 	}
 
-	public function testAction($id)
-	{
-		$this->question->findTags($id);
-	}
-
 	public function idAction($id)
 	{
 	 
@@ -52,15 +47,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 			'params'      => [$id],
 		]);
 
-		$this->dispatcher->forward([
-			'controller' => 'tags',
-			'action'     => 'side-tags',
-		]);
-
-		$this->dispatcher->forward([
-			'controller' => 'comments',
-			'action'     => 'latest-side',
-		]);
+		$this->sidebar();
 
 		$this->question->countId($id);
 	}
@@ -84,10 +71,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	        'title' => "View all Questions",
 	    ]);
 
-	    $this->dispatcher->forward([
-			'controller' => 'tags',
-			'action'     => 'side-tags',
-		]);
+	    $this->sidebar();
 
 	}
 	
@@ -162,6 +146,26 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 			'title' => "New Question",
 			'form' => $form->getHTML()
 		]);
+	}
+
+	private function sidebar()
+	{
+
+		$this->dispatcher->forward([
+			'controller' => 'users',
+			'action'     => 'top-users',
+		]);
+
+	    $this->dispatcher->forward([
+			'controller' => 'tags',
+			'action'     => 'side-tags',
+		]);
+
+		$this->dispatcher->forward([
+			'controller' => 'comments',
+			'action'     => 'latest-side',
+		]);
+
 	}
 
 }
