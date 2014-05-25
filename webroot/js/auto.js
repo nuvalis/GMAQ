@@ -17,7 +17,7 @@ $(function() {
 	.autocomplete({
 
 		source: function( request, response ) {
-			$.post( "http://localhost/~nuvalis/projects/GMAQ/webroot/tags/auto", {
+			$.post( window.base_url + "/tags/auto", {
 			term: extractLast( request.term )
 			}, response, "json" );
 		},
