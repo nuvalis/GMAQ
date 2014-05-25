@@ -23,12 +23,24 @@ class TagsController extends \nuvalis\Base\ApplicationController
 	public function indexAction()
 	{
 
-		$all = $this->tags->findAll();
+		$all = $this->tags->popularTags();
 
 		$this->theme->setTitle("List all Tags");
 	    $this->views->add('tags/list_tags', [
 	        'tags' => $all,
 	    ]);
+
+	}
+
+	public function sideTagsAction()
+	{
+
+		$all = $this->tags->popularTags(10);
+
+		$this->theme->setTitle("List all Tags");
+	    $this->views->add('tags/list_tags', [
+	        'tags' => $all,
+	    ], 'sidebar');
 
 	}
 
@@ -41,6 +53,7 @@ class TagsController extends \nuvalis\Base\ApplicationController
 			$q->answersCount = $this->question->countAnswers($q->questions_id);
 			$q->tags 		 = $this->question->findTags($q->questions_id);
 			$q->votes 		 = $this->votes->calcVotes("questions", $q->questions_id);
+			$q->id 			 = $q->questions_id;
 
 		}
 	 
@@ -51,8 +64,26 @@ class TagsController extends \nuvalis\Base\ApplicationController
 	    ]);
 	}
 
-	public function addAction() 
+	public function autoAction($term = null) 
 	{
+
+		if(isset($_POST['term'])){
+			$term = $_POST['term'];
+		}
+
+		$res = $this->tags->searchTag($term);
+
+		$this->theme->configure(ANAX_APP_PATH . 'config/json.php');
+
+		header('Cache-Control: no-cache, must-revalidate');
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Content-type: application/json');
+
+		$json = json_encode($res, JSON_PRETTY_PRINT);
+
+		$this->views->add('json/json', [
+	        'json' => $json,
+	    ]);
 
 	}
 	 

@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width" />
 <title><?=$title . $title_append?></title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <script src='<?=$this->url->asset($modernizr)?>'></script>
 
 <?= themeLinks(); ?>
@@ -40,10 +41,16 @@
 					<?php $this->views->render('featured')?>			
 				</section>
 			<?php endif; ?>
-
-			<?php if(isset($main)) echo $main?>
-			<?php $this->views->render('main')?>
-
+			
+			<section class="<?php if($this->views->hasContent('sidebar')){echo "main-content-sidebar";} else {echo "main-content";} ?>">
+				<?php if(isset($main)) echo $main?>
+				<?php $this->views->render('main')?>
+			</section>
+			<?php if ($this->views->hasContent('sidebar')): ?>
+				<aside class="sidebar">
+					<?php $this->views->render('sidebar')?>
+				</aside>
+			<?php endif ?>
 		</div>
 
 	</main>
@@ -51,13 +58,14 @@
 	<footer>
 		<div class="inner">
 
-		<?php if(isset($footer)) echo $footer?>
-		<?php $this->views->render('footer')?>
+		<?php if(isset($footer)) echo $footer; ?>
+		<?php $this->views->render('footer');?>
 
 		</div>
 	</footer>
 
 	<?php if(isset($jquery)):?><script src='<?=$this->url->asset($jquery)?>'></script><?php endif; ?>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 
 	<?php if(isset($javascript_include)): foreach($javascript_include as $val): ?>
 		<script src='<?=$this->url->asset($val)?>'></script>
@@ -71,5 +79,7 @@
 		  s.parentNode.insertBefore(g,s)}(document,'script'));
 		</script>
 	<?php endif; ?>
+
+	    <script type="text/javascript" src="<?=$this->url->asset('js/auto.js')?>"></script>
 
 </body>

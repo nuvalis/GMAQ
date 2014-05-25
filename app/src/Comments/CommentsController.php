@@ -83,5 +83,17 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 		]);
 
 	}
+
+	public function latestSideAction()
+	{
+
+		$comments = $this->comments->latestCommentsGlobal();
+
+		$this->theme->setTitle("Comment");
+		$this->views->add('comments/latest', [
+			'comments' => $comments
+		], 'sidebar');
+
+	}
 	 
 }

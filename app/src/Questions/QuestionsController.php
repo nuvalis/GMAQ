@@ -52,6 +52,16 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 			'params'      => [$id],
 		]);
 
+		$this->dispatcher->forward([
+			'controller' => 'tags',
+			'action'     => 'side-tags',
+		]);
+
+		$this->dispatcher->forward([
+			'controller' => 'comments',
+			'action'     => 'latest-side',
+		]);
+
 		$this->question->countId($id);
 	}
 
@@ -73,6 +83,11 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	        'questions' => $all,
 	        'title' => "View all Questions",
 	    ]);
+
+	    $this->dispatcher->forward([
+			'controller' => 'tags',
+			'action'     => 'side-tags',
+		]);
 
 	}
 	

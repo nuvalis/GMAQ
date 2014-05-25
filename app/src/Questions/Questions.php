@@ -8,6 +8,9 @@ class Questions extends \Anax\MVC\BaseModel
 	public function addTags($string, $questionID)
 	{
 		$tags = explode(',', $string);
+		$tags = array_filter($tags, function($var){
+			return (trim($var) !== ''); //Return true if not empty string
+		});
 
 		foreach ($tags as $tag) {
 					
@@ -86,7 +89,8 @@ class Questions extends \Anax\MVC\BaseModel
 			            ON q.id = qtr.questions_id
 			        INNER JOIN tags t
 			            ON qtr.tag_id = t.tag_id
-			    WHERE t.tag_name = ?";
+			    WHERE t.tag_name = ?
+			    ORDER BY q.created DESC";
 
 		$this->db->execute($sql, [$tag]);
 		$this->db->setFetchModeClass(__CLASS__);
@@ -129,6 +133,11 @@ class Questions extends \Anax\MVC\BaseModel
 		
 		return $res->count;
 
+ 	}
+
+ 	public function orderList($order)
+ 	{
+ 		
  	}
 
 

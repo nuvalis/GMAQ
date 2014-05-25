@@ -1,4 +1,3 @@
 <div class="brand">
-<h1>GMAQ</h1>
-<p>Give me a Quest!</p>
+<img class="logo" src="<?= $this->url->asset('images/QuestLogo.png') ?>" alt="">
 </div>

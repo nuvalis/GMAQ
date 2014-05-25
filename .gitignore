@@ -12,7 +12,8 @@
 Icon?
 ehthumbs.db
 Thumbs.db
-.htaccess
+*.htaccess
+webroot/.htaccess
 
 # Package handling
 composer.json

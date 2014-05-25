@@ -1,5 +1,7 @@
 nav, .logo {
 
+	max-height: 22px;
+
 }
 
 article, aside, footer section, .message {
@@ -103,14 +105,15 @@ th, tr, td {
 
 .comment-content {
 	font-size: 85%;
+
 }
 
 .comment-gravatar {
-	.column(1);
+	.column(2);
 }
 
 .comment-main {
-	.column(11);
+	.column(10);
 }
 
 .brand {
@@ -175,7 +178,6 @@ th, tr, td {
 }
 
 .tag-list {
-	font-size: 140%;
 	background: rgba(0, 0, 0, 0.2);
 	padding: 0.4em;
 	.border-radius(4px);
@@ -195,21 +197,35 @@ table, tbody, td, tr, th {
 }
 
 .gravatar {
-	.border-radius(50%)
+	.border-radius(50%);
+	max-width: 64px;
+	max-height: 64px;
 }
 
 #question-box, #answers-box {
-	.column(7);
 }
 
 #question-box .tags {
+	.column(8);
 	margin-top: 1.5em;
+}
+
+#question-box .votes, #question-box .views {
+	.column(2);
 }
 
 @arrow: 12px;
 
 .vote-up, .vote-down {
-	margin: 0.5em;
+	margin-left: 40%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+#answers-box .vote-up, #answers-box .vote-down {
+	margin-left: 25%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
 
 .vote-up {
@@ -229,3 +245,40 @@ table, tbody, td, tr, th {
 	
 	border-top: @arrow solid rgba(0, 0, 0, 0.5);
 }
+
+pre {
+	padding: 1em;
+	background: rgba(0, 0, 0, 0.2);
+	border: solid rgba(0, 0, 0, 0.5) 1px;
+	margin-top: 2em;
+	margin-bottom:  2em;
+}
+
+.main-content-sidebar {
+	.column(8)
+}
+
+.sidebar {
+	.column(3)
+
+	.tag-list {
+		font-size: 0.8em;
+	}
+}
+
+.new-question {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.new-question a {
+
+	font-size: 130%;
+	padding: 1em;
+	background: rgba(0, 0, 0, 0.1);
+	.border-radius(4px);
+}
+.new-question a:hover {
+	background: rgba(0, 0, 0, 0.2);
+}
+
