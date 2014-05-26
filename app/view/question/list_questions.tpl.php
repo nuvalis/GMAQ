@@ -6,6 +6,7 @@
 	<a href="<?= $this->url->create('questions/list/votes') ?>">Votes</a>
 	<a href="<?= $this->url->create('questions/list/views') ?>">Views</a>
 	<a href="<?= $this->url->create('questions/list/active') ?>">Activity</a>
+	<a href="<?= $this->url->create('questions/list/answers') ?>">Answers</a>
 </div>
 
 <?php foreach($questions as $question) : ?>

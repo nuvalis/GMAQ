@@ -153,6 +153,9 @@ class Questions extends \Anax\MVC\BaseModel
  			 case 'views':
  				$order = 'views';
  				break;
+ 			case 'answers':
+ 				$order = 'answersCount';
+ 				break;
  			default:
  				$order = 'created';
  				break;

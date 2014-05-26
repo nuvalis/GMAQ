@@ -17,9 +17,10 @@ class Comments extends \Anax\MVC\BaseModel
 
 	public function latestComments()
 	{
-		$sql = "SELECT *
-				FROM comments
-				ORDER BY created DESC
+		$sql = "SELECT c.content, c.answers_id, c.questions_id, c.created, u.username, u.id AS user_id
+				FROM comments c
+					INNER JOIN user u ON c.user_id = u.id
+				ORDER BY c.created DESC
 				LIMIT 3";
 
 		$this->db->execute($sql);
