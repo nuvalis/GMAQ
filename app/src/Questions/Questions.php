@@ -5,6 +5,20 @@ namespace nuvalis\Questions;
 class Questions extends \Anax\MVC\BaseModel
 {
 
+	public function questionsByID($id)
+	{
+
+		$sql = "SELECT q.id, q.content, q.title, q.views,  q.created, u.id AS user_id, u.username,
+				(SELECT SUM(v.vote_value) FROM votes v WHERE q.id = v.questions_id) AS votes
+				FROM questions q
+					INNER JOIN user u ON u.id = q.user_id
+				WHERE q.id = ?";
+		$this->db->execute($sql,[$id]);
+		$this->db->setFetchModeClass(__CLASS__);
+		return $this->db->fetchOne();
+
+	}
+
 	public function addTags($string, $questionID)
 	{
 		$tags = explode(',', $string);

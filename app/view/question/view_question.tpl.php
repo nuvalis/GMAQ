@@ -1,12 +1,16 @@
 <div id="question-box" class="question" data-questions-ID="<?= $question->id ?>">
 <h1><?= $question->title ?></h1>
 
+	<div class="posted-by smaller right">Asked by 
+	<a href="<?= $this->url->create('user/id' . $question->user_id) ?>"><?= $question->username ?></a> 
+	on <?= date("Y-m-d H:i", strtotime($question->created)); ?></div>
+
 	<div class="views">Views <br><br> <?php if ($question->views === 0){echo "0";} else {echo $question->views;} ?></div>
 	<div class="votes">Votes
 		<a href="<?= $this->url->create("votes/up/questions/" . $question->id) ?>">
 			<div class="vote-up"></div>
 		</a>
-		<?php if ($votes == 0){echo "0";} else {echo $votes;} ?>
+		<?php if ($question->votes == 0){echo "0";} else {echo $question->votes;} ?>
 		<a href="<?= $this->url->create("votes/down/questions/" . $question->id) ?>">
 			<div class="vote-down"></div>
 		</a>

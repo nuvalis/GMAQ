@@ -28,17 +28,15 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	public function idAction($id)
 	{
 	 
-	    $question = $this->question->findById($id);
+	    $question = $this->question->questionsByID($id);
 	    $comments = $this->question->findComments($id);
 	   	$tags = $this->question->findTags($id);
-	   	$votes = $this->votes->calcVotes("questions", $id);
 	 
 	    $this->theme->setTitle("Question");
 	    $this->views->add('question/view_question', [
 	        'question' 	=> $question,
 	        'comments' 	=> $comments,
 	        'tags'		=> $tags,
-	        'votes'		=> $votes
 	    ]);
 
 	   	$this->dispatcher->forward([
