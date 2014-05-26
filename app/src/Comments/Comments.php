@@ -15,11 +15,11 @@ class Comments extends \Anax\MVC\BaseModel
 	    return $this->db->fetchAll();
 	}
 
-	public function latestCommentsGlobal()
+	public function latestComments()
 	{
-		$sql = "SELECT DISTINCT *
-				FROM comments c
-				ORDER BY c.created DESC
+		$sql = "SELECT *
+				FROM comments
+				ORDER BY created DESC
 				LIMIT 3";
 
 		$this->db->execute($sql);

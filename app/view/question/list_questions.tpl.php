@@ -1,4 +1,13 @@
 <h1>Todays Quests</h1>
+
+<div class="order smaller right">
+	<span>Order By: </span>
+	<a href="<?= $this->url->create('questions/list/created') ?>">Created</a>
+	<a href="<?= $this->url->create('questions/list/votes') ?>">Votes</a>
+	<a href="<?= $this->url->create('questions/list/views') ?>">Views</a>
+	<a href="<?= $this->url->create('questions/list/active') ?>">Activity</a>
+</div>
+
 <?php foreach($questions as $question) : ?>
 	<div class="question">
 

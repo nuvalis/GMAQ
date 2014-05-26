@@ -13,6 +13,8 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 	{
 	    $this->comments = new \nuvalis\Comments\Comments();
 	    $this->comments->setDI($this->di);
+	    $this->questions = new \nuvalis\Questions\Questions();
+	    $this->questions->setDI($this->di);
 	    $this->theme->setTitle("Comment");
 	}
 
@@ -39,8 +41,13 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 				    $this->comments->save([
 				        'content' 	=> $form->Value('content'),
 				        'user_id' 	=> $this->auth->userid(),
-				        $target . '_id' 	=> $ID,
+				        $target . '_id' => $ID,
 				        'created' 	=> $now,
+				    ]);
+
+				    $this->questions->save([
+				    	'id' => $ID,
+				        'updated' 	=> $now,
 				    ]);
 
 					return true;
@@ -84,10 +91,10 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 
 	}
 
-	public function latestSideAction()
+	public function latestAction()
 	{
 
-		$comments = $this->comments->latestCommentsGlobal();
+		$comments = $this->comments->latestComments();
 
 		$this->theme->setTitle("Comment");
 		$this->views->add('comments/latest', [

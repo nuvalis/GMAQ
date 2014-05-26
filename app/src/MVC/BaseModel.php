@@ -138,10 +138,12 @@ class BaseModel implements \Anax\DI\IInjectionAware
 	 *
 	 * @return array
 	 */
-	public function findAll()
+	public function findAll($condition = null, $order = 'DESC')
 	{
-	    $this->db->select()
+	    $sql = $this->db->select()
 	             ->from($this->getSource());
+
+	    if(isset($order)){$sql->orderby($condition . ' ' . $order);}
 	 
 	    $this->db->execute();
 	    $this->db->setFetchModeClass(__CLASS__);

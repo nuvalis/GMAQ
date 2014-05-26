@@ -101,7 +101,7 @@ class Questions extends \Anax\MVC\BaseModel
  	public function findComments($questionID) 
  	{
 
-	$this->db->select("c.content, c.created, u.username, u.email, u.id AS user_id")
+	$this->db->select("c.id, c.content, c.created, u.username, u.email, u.id AS user_id")
         ->from("comments AS c")
        	->where("questions_id = ?")
        	->join("user AS u", "u.id = c.user_id");
@@ -135,9 +135,38 @@ class Questions extends \Anax\MVC\BaseModel
 
  	}
 
- 	public function orderList($order)
+ 	public function orderList($order = 'created')
  	{
- 		
+
+ 		// Whitelist
+
+ 		switch ($order) {
+ 			case 'created':
+ 				$order = 'created';
+ 				break;
+ 			 case 'votes':
+ 				$order = 'votes';
+ 				break;
+ 			 case 'active':
+ 				$order = 'updated';
+ 				break;
+ 			 case 'views':
+ 				$order = 'views';
+ 				break;
+ 			default:
+ 				$order = 'created';
+ 				break;
+ 		}
+
+ 		$sql = "SELECT *,
+ 				(SELECT SUM(v.vote_value) FROM votes v WHERE q.id = v.questions_id) AS votes,
+ 				(SELECT COUNT(*) FROM answers a WHERE q.id = a.questions_id) AS answersCount
+ 				FROM questions q
+ 				ORDER BY {$order} DESC";
+
+ 		$this->db->execute($sql);
+		return $this->db->fetchAll();
+		
  	}
 
 

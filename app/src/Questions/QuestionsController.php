@@ -21,7 +21,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	public function indexAction()
 	{
 
-		$this->listAction();
+		$this->redirectTo('questions/list');
 
 	}
 
@@ -52,17 +52,13 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 		$this->question->countId($id);
 	}
 
-	public function listAction()
+	public function listAction($order = 'created')
 	{
 	 
-		$all = $this->question->findAll();
+		$all = $this->question->orderList($order);
 
 		foreach($all as $q) {
-
-			$q->answersCount = $this->question->countAnswers($q->id);
-			$q->tags 		 = $this->question->findTags($q->id);
-			$q->votes 		 = $this->votes->calcVotes("questions", $q->id);
-
+			$q->tags = $this->question->findTags($q->id);
 		}
 	 
 		$this->theme->setTitle("List all Questions");
@@ -163,7 +159,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 
 		$this->dispatcher->forward([
 			'controller' => 'comments',
-			'action'     => 'latest-side',
+			'action'     => 'latest',
 		]);
 
 	}

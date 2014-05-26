@@ -76,6 +76,11 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 				        'created' 	=> $now,
 				    ]);
 
+				    $this->questions->save([
+				    	'id' => $ID,
+				        'updated' 	=> $now,
+				    ]);
+
 					return true;
 				}
 			],
@@ -110,10 +115,7 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 	    $answers = $this->answers->findAnswers($id);
 
 	    foreach ($answers as $a) {
-
-	    	$a->votes = $this->votes->calcVotes("answers", $a->id);
 	    	$a->comment = $this->answers->getAnswersComments($a->id);
-
 	    }
 	 
 	    $this->theme->setTitle("Answers");

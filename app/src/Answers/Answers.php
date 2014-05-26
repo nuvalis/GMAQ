@@ -17,11 +17,12 @@ class Answers extends \Anax\MVC\BaseModel
  	public function findAnswers($questionID) 
  	{
 
- 	$this->db->select()
-	    ->from('answers')
-	    ->where("questions_id = ?");
+	 $sql = "SELECT *,
+	 		(SELECT SUM(v.vote_value) FROM votes v WHERE a.id = v.answers_id) AS votes
+	 		FROM answers a
+	 		WHERE questions_id = ?";
 
-	$this->db->execute([$questionID]);
+	$this->db->execute($sql,[$questionID]);
 	$this->db->setFetchModeClass(__CLASS__);
 	return $this->db->fetchAll();
 

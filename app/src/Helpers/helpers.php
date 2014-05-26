@@ -27,5 +27,4 @@ class Helpers
       return $text;
   	}
 
-
 }
