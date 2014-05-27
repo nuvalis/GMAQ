@@ -107,10 +107,10 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 		]);
 	}
 
-	public function listAnswersAction($id)
+	public function listAnswersAction($id, $order)
 	{
 
-	    $answers = $this->answers->findAnswers($id);
+	    $answers = $this->answers->findAnswers($id, $order);
 
 	    foreach ($answers as $a) {
 	    	$a->comment = $this->answers->getAnswersComments($a->id);

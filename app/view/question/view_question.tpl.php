@@ -37,4 +37,9 @@
 
 </div>
 
+<p class="order smaller right">
+	<span>Order By: </span>
+	<a href="<?= $this->url->create('questions/id/'. $question->id .'created') ?>">Created</a>
+	<a href="<?= $this->url->create('questions/id/'. $question->id .'/votes') ?>">Votes</a>
+</p>
 

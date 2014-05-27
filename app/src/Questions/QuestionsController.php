@@ -25,7 +25,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 
 	}
 
-	public function idAction($id)
+	public function idAction($id, $order = 'created')
 	{
 	 
 	    $question = $this->question->questionsByID($id);
@@ -42,7 +42,7 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 	   	$this->dispatcher->forward([
 			'controller' => 'answers',
 			'action'     => 'list-answers',
-			'params'      => [$id],
+			'params'      => [$id, $order],
 		]);
 
 		$this->sidebar();

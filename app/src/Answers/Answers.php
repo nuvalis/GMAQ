@@ -14,13 +14,26 @@ class Answers extends \Anax\MVC\BaseModel
  		
  	}
 
- 	public function findAnswers($questionID) 
+ 	public function findAnswers($questionID, $order) 
  	{
+
+ 	 	switch ($order) {
+ 			case 'created':
+ 				$order = 'created';
+ 				break;
+ 			 case 'votes':
+ 				$order = 'votes';
+ 				break;
+ 			default:
+ 				$order = 'created';
+ 				break;
+ 		}
 
 	 $sql = "SELECT *,
 	 		(SELECT SUM(v.vote_value) FROM votes v WHERE a.id = v.answers_id) AS votes
 	 		FROM answers a
-	 		WHERE questions_id = ?";
+	 		WHERE questions_id = ?
+	 		ORDER BY $order DESC";
 
 	$this->db->execute($sql,[$questionID]);
 	$this->db->setFetchModeClass(__CLASS__);

@@ -20,12 +20,14 @@ class Helpers
 
 	function truncate($text, $chars = 250)
   	{
+
+  	  if(strlen($text) > $chars) {
+
       $text = $text." ";
       $text = substr($text,0,$chars);
       $text = substr($text,0,strrpos($text,' '));
+      $text = $text."...";
       
-      if(strlen($text) === $chars){
-      	$text = $text."...";
       }
       
       return $text;

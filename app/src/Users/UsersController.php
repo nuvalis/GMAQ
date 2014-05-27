@@ -31,12 +31,6 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		$this->listAction();
 	}
 
-	public function hackAction()
-	{
-		$_SESSION["auth"]["username"] = "hacker";
-		$_SESSION["auth"]["userid"] = "1337";
-	}
-
 	/**
 	 * List user with id.
 	 *
@@ -209,16 +203,18 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	public function updateAction($id)
 	{
 
+		$this->isLoggedIn();
+
+		if (!$this->auth->userMatch($id)){
+			$this->flashy->error('You don\'t have permission to change this account.');
+			$this->redirectTo('');
+		};
+
 		$form = $this->form;
 
+		$user = $this->users->findById($id);
+
 		$form = $form->create([], [
-			'username' => [
-				'type'        => 'text',
-				'label'       => 'Username',
-				'required'    => true,
-				'validation'  => ['not_empty'],
-				'value' => $user->username,
-			],
 			'name' => [
 				'type'        => 'text',
 				'label'       => 'Name of contact person:',
@@ -284,6 +280,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	 */
 	public function changePasswordAction($id)
 	{
+
+		$this->isLoggedIn();
+		
+		if (!$this->auth->userMatch($id)){
+			$this->flashy->error('You don\'t have permission to change this account.');
+			$this->redirectTo('');
+		};
 
 		$form = $this->form;
 

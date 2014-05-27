@@ -11,6 +11,18 @@
 	Votes: <?= $user->points->votes ?></p>
 </div>
 
+<?php if ($this->auth->userMatch($user->id)): ?>
+
+	<div class="user-tools small">
+		<p>
+			<a href="<?= $this->url->create('users/update/' . $user->id ); ?>">Update Profile</a> <br>
+			<a href="<?= $this->url->create('users/change-password/' . $user->id); ?>">Change Password</a>
+		</p>
+	</div>
+	
+<?php endif ?>
+
+
 <div class="latest-questions">
 <h3>Latest Questions</h3>
 <?php if ($user->latestQuestions): ?>
