@@ -2,19 +2,12 @@
 
 namespace nuvalis\Auth;
  
-class Auth {
+class Auth 
+{
 
-	use \Anax\DI\TInjectable,
-		\Anax\MVC\TRedirectHelpers;
-	
-	public function __construct() 
+	public function userMatch($id)
 	{
-
-	}
-
-	public function getPermission()
-	{
-
+		if($this->userId() == $id){ return true; } else { return false; }
 	}
 
 	public function isLoggedIn() 

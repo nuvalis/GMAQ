@@ -13,16 +13,20 @@ class ApplicationController implements \Anax\DI\IInjectionAware
 
 	public function initialize()
 	{
-	    $this->posts = new \Anax\Posts\Posts();
-	    $this->posts->setDI($this->di);
 	    $this->theme->setTitle("Application");
 	}
 
 	protected function isLoggedIn() {
-		if(!$this->auth->isLoggedIn()) {
+
+		$sql = "SELECT id FROM user WHERE id = ? AND username = ?";
+ 		$this->db->execute($sql,[$this->auth->userId(), $this->auth->username()]);
+		$this->db->setFetchModeClass(__CLASS__);
+		$res = $this->db->fetchOne();
+
+		if(!isset($res->id)) {
+
 			$this->redirectTo("users/login");
 		}
 	}
 
-	 
 }

