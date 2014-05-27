@@ -152,16 +152,14 @@ class UsersController extends \nuvalis\Base\ApplicationController
 			'submit' => [
 				'type'      => 'submit',
 				'callback'  => function($form) {
-
-					$now = date(DATE_RFC2822);
 			 
 				    $this->users->save([
 				        'username' 	=> $form->Value('username'),
 				        'email' 	=> $form->Value('email'),
 				        'name' 		=> $form->Value('name'),
 				        'password' 	=> password_hash($form->Value('password'), PASSWORD_BCRYPT),
-				        'created' 	=> $now,
-				        'active' 	=> $now,
+				        'created' 	=> $this->mzHelpers->now(),
+				        'active' 	=> $this->mzHelpers->now(),
 				    ]);
 
 					return true;
@@ -232,15 +230,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 				'type'      => 'submit',
 				'callback'  => function($form) {
 
-					$now = date(DATE_RFC2822);
-
 				    $this->users->save([
 				    	'id'		=> $this->auth->userId(),
 				        'username' 	=> $form->Value('username'),
 				        'email' 	=> $form->Value('email'),
 				        'name' 		=> $form->Value('name'),
-				        'updated' 	=> $now,
-				        'active' 	=> $now,
+				        'updated' 	=> $this->mzHelpers->now(),
+				        'active' 	=> $this->mzHelpers->now(),
 				    ]);
 
 					return true;
@@ -307,13 +303,11 @@ class UsersController extends \nuvalis\Base\ApplicationController
 				'type'      => 'submit',
 				'callback'  => function($form) {
 
-					$now = date(DATE_RFC2822);
-
 				    $this->users->save([
 				    	'id'		=> $this->auth->userId(),
 				        'password' 	=> password_hash($form->Value('password'), PASSWORD_BCRYPT),
-				        'updated' 	=> $now,
-				        'active' 	=> $now,
+				        'updated' 	=> $this->mzHelpers->now(),
+				        'active' 	=> $this->mzHelpers->now(),
 				    ]);
 
 					return true;
@@ -384,11 +378,9 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	        die("Missing id");
 	    }
 	 
-	    $now = date(DATE_RFC2822);
-	 
 	    $user = $this->users->find($id);
 	 
-	    $user->deleted = $now;
+	    $user->deleted = $this->mzHelpers->now();
 	    $user->save();
 
 	    $this->flash->success("Soft Deleted User");
@@ -496,12 +488,10 @@ class UsersController extends \nuvalis\Base\ApplicationController
 					$check = password_verify($form->Value('password'), $hash);
 
 					if($check === true) {
-
-						$now = date(DATE_RFC2822);
 						 
 						$this->users->save([
 							'id'		=> $user->id,
-							'active' 	=> $now,
+							'active' 	=> $this->mzHelpers->now(),
 						]);
 						
 						$_SESSION["auth"]["username"] = $user->username;
@@ -547,7 +537,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	{
 		$this->users->save([
 				'id'		=> $this->auth->userid(),
-				'active' 	=> $now,
+				'active' 	=> $this->mzHelpers->now(),
 		]);
 
 		session_destroy();

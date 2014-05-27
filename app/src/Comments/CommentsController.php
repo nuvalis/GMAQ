@@ -35,19 +35,17 @@ class CommentsController extends \nuvalis\Base\ApplicationController
 			'submit' => [
 				'type'      => 'submit',
 				'callback'  => function($form) use ($ID, $target) {
-
-					$now = date(DATE_RFC2822);
 			 
 				    $this->comments->save([
 				        'content' 	=> $form->Value('content'),
 				        'user_id' 	=> $this->auth->userid(),
 				        $target . '_id' => $ID,
-				        'created' 	=> $now,
+				        'created' 	=> $this->mzHelpers->now(),
 				    ]);
 
 				    $this->questions->save([
 				    	'id' => $ID,
-				        'updated' 	=> $now,
+				        'updated' 	=> $this->mzHelpers->now(),
 				    ]);
 
 					return true;

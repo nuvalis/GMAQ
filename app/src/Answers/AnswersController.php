@@ -65,20 +65,18 @@ class AnswersController extends \nuvalis\Base\ApplicationController
 			'submit' => [
 				'type'      => 'submit',
 				'callback'  => function($form) use ($questionID) {
-
-					$now = date(DATE_RFC2822);
 			 
 				    $this->answers->save([
 				        'title' 	=> $form->Value('title'),
 				        'content' 	=> $form->Value('content'),
 				        'user_id' 	=> $this->auth->userid(),
 				        'questions_id' 	=> $questionID,
-				        'created' 	=> $now,
+				        'created' 	=> $this->mzHelpers->now(),
 				    ]);
 
-				    $this->questions->save([
+				    $this->question->save([
 				    	'id' => $ID,
-				        'updated' 	=> $now,
+				        'updated' 	=> $this->mzHelpers->now(),
 				    ]);
 
 					return true;

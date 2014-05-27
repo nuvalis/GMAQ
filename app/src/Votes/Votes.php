@@ -12,14 +12,12 @@ class Votes extends \Anax\MVC\BaseModel
  	public function voteUp($postid, $userId, $target) 
  	{
  		if(!$this->checkVoteExist($postid, $userId, $target)) {return false;}
- 		
- 		$now = date(DATE_RFC2822);
 
  		$this->save([
 		$target . '_id' 	=> $postid,
 		'user_id' 			=> $userId,
 		'vote_value'		=> "1",
-		'created'			=> $now
+		'created'			=> time(),
 		]);
 
 		$this->flashy->success("Voted successfully");
@@ -30,13 +28,11 @@ class Votes extends \Anax\MVC\BaseModel
  	{
  		if(!$this->checkVoteExist($postid, $userId, $target)) {return false;}
 
- 		$now = date(DATE_RFC2822);
-
  		$this->save([
 		$target . '_id' 	=> $postid,
 		'user_id' 			=> $userId,
 		'vote_value'		=> "-1",
-		'created'			=> $now
+		'created'			=> time(),
 		]);
 
 		$this->flashy->success("Voted successfully");

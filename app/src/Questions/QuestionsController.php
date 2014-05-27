@@ -99,15 +99,13 @@ class QuestionsController extends \nuvalis\Base\ApplicationController
 			'submit' => [
 				'type'      => 'submit',
 				'callback'  => function($form) {
-
-					$now = date(DATE_RFC2822);
 			 
 				    $this->question->save([
 				        'title' 	=> $form->Value('title'),
 				        'content' 	=> $form->Value('content'),
 				        'user_id' 	=> $this->auth->userid(),
 				        'cat_id' 	=> $this->auth->userid(),
-				        'created' 	=> $now,
+				        'created' 	=> $this->mzHelpers->now(),
 				    ]);
 
 				    $lastQuestionID = $this->db->lastInsertId();

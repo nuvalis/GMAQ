@@ -31,4 +31,9 @@ class Helpers
       return $text;
   	}
 
+  	function now()
+  	{
+  		return date("Y-m-d H:i:s");
+  	}
+
 }
