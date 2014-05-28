@@ -14,6 +14,19 @@
 	 
 	});
 
+	$app->router->add('about', function() use ($app) {
+	 
+		$app->theme->setTitle("About");
+
+	    $content = $app->fileContent->get('about.md');
+	    $content = $app->textFilter->doFilter($content, 'shortcode, markdown');
+
+		$app->views->add('about/about',[
+	        'content' => $content,
+	    ]);
+	 
+	});
+
 	$app->router->add('setup', function() use ($app) {
 	 
 		$app->db->setVerbose();
@@ -42,7 +55,7 @@
 			['username', 'email', 'name', 'password', 'created', 'active']
 		);
 	
-		$now = date(DATE_RFC2822);
+		$now = $app->mzHelpers->now();
 	
 		$app->db->execute([
 			'admin',
@@ -71,69 +84,8 @@
 			$now
 		]);
 
-		$app->db->dropTableIfExists('comment')->execute();
-	 
-		$app->db->createTable(
-			'comment',
-			[
-				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-				'username' => ['varchar(30)', 'not null'],
-				'email' => ['varchar(80)'],
-				'name' => ['varchar(80)'],
-				'web' => ['varchar(128)'],
-				'content' => ['text'],
-				'page' => ['varchar(80)'],
-				'created' => ['datetime'],
-				'updated' => ['datetime'],
-				'deleted' => ['datetime'],
-				'active' => ['datetime'],
-			]
-		)->execute();
-
-		$app->db->insert(
-			'comment',
-			['username', 'email', 'name', 'web', 'content', 'page', 'created', 'active']
-		);
-	
-		$now = date(DATE_RFC2822);
-	
-		$app->db->execute([
-			'admin',
-			'admin@dbwebb.se',
-			'Administrator',
-			'test.com',
-			'Text',
-			'all',
-			$now,
-			$now
-		]);
-	
-		$app->db->execute([
-			'doe',
-			'doe@dbwebb.se',
-			'John/Jane Doe',
-			'test.com',
-			'Text',
-			'all',
-			$now,
-			$now
-		]);
-
-		$app->db->execute([
-			'doe',
-			'doe@dbwebb.se',
-			'John/Jane Doe',
-			'test.com',
-			'Text',
-			'me',
-			$now,
-			$now
-		]);
-
 		$app->flashy->success("Setup is Done");
-
-	    $url = $app->url->create('users/list');
-	    $app->response->redirect($url);
+	    $app->redirectTo('users/list');
 		
 	});
 
