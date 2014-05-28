@@ -2,8 +2,10 @@
 
 namespace nuvalis\Helpers;
 
-class Helpers
+class Helpers implements \Anax\DI\IInjectionAware
 {
+
+    use \Anax\DI\TInjectable;
 
 	function get_gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
 	    $url = 'http://www.gravatar.com/avatar/';
@@ -36,6 +38,18 @@ class Helpers
   	function now()
   	{
   		return date("Y-m-d H:i:s");
+  	}
+
+  	function naturalizeMD($content, $chars = 250)
+  	{
+
+		$content = $this->textFilter->markdown($content);
+		$content = strip_tags($content);
+		$content = htmlentities($content);
+		$content = $this->truncate($content, $chars);
+
+		return $content;
+
   	}
 
 }

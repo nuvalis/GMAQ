@@ -1,12 +1,9 @@
 <h3>Latest Comments</h3>
 <div class="comments">
 <?php foreach($comments as $comment) : ?>
-	<?php
-	$content = $this->textFilter->markdown($comment->content);
-	$content = strip_tags($content);
-	$content = htmlentities($content);
-	$content = $this->mzHelpers->truncate($content);
-	?>
+
+	<?php $content = $this->mzHelpers->naturalizeMD($comment->content); ?>
+	
 	<div class="comment-post">
 		<div class="posted-by smaller">
 		<a href="<?= $this->url->create('users/id/' . $comment->user_id) ?>">

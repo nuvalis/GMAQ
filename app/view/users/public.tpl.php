@@ -49,13 +49,17 @@
 <h3>Latest Comments</h3>
 <?php if ($user->latestComments): ?>
 	<?php foreach($user->latestComments as $comment) : ?>
+		<div class="comment">
+			<?php $content = $this->mzHelpers->naturalizeMD($comment->content, 144); ?>
 
-		<?php if (isset($comment->questions_id)): ?>
-			<p><a href="<?= $this->url->create('questions/id/' . $comment->questions_id); ?>"><?= substr($comment->content, 0, 140); ?></a></p>
-		<?php elseif(isset($comment->answers_id)): ?>
-			<p><a href="<?= $this->url->create('answers/id/' . $comment->answers_id); ?>"><?= substr($comment->content, 0, 140); ?></a></p>
-		<?php endif ?>
-		
+			<p class="smaller"><?= $comment->created ?></p> 
+
+			<?php if (isset($comment->questions_id)): ?>
+				<p class="small"><a href="<?= $this->url->create('questions/id/' . $comment->questions_id); ?>"><?= $content ?></a></p>
+			<?php elseif(isset($comment->answers_id)): ?>
+				<p class="small"><a href="<?= $this->url->create('answers/id/' . $comment->answers_id); ?>"><?= $content ?></a></p>
+			<?php endif ?>
+		</div>
 	<?php endforeach; ?>
 <?php else: ?>
 	<p class="smaller"><?= ucfirst($user->username) ?> has not commented on anything yet.</p>

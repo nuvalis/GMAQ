@@ -2,8 +2,11 @@
 
 namespace nuvalis\Auth;
  
-class Auth 
+class Auth implements \Anax\DI\IInjectionAware
 {
+
+    use \Anax\DI\TInjectable,
+    	\Anax\MVC\TRedirectHelpers;
 
 	public function userMatch($id)
 	{

@@ -14,8 +14,9 @@
 	    return $form;
 	});
 
-	$di->setShared('auth', function() {
+	$di->setShared('auth', function() use ($di) {
 	    $auth = new nuvalis\Auth\Auth();
+	    $auth->setDI($di);
 	    return $auth;
 	});
 
@@ -24,8 +25,9 @@
 	    return $flash;
 	});
 
-	$di->setShared('mzHelpers', function() {
+	$di->setShared('mzHelpers', function() use ($di) {
 	    $mzHelpers = new nuvalis\Helpers\Helpers();
+	    $mzHelpers->setDI($di);
 	    return $mzHelpers;
 	});
 
