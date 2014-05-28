@@ -1,8 +1,13 @@
-GMAQ
-====
+Q->Answer
+================
 
 dbwebb.se KMOM710 WIP
 
+Installation
+------------------
+Step 1 Clone it
+Step 2 Visit webroot/install and webroot/setup for new dev sqlitedb. 
+Step 3 Play.
 
 TODO
 ==========

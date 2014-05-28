@@ -29,6 +29,11 @@
 	    return $mzHelpers;
 	});
 
+	$di->setShared('json', function() {
+	    $json = new nuvalis\JSON\JSON();
+	    return $json;
+	});
+
 	$di->set('PostsController', function() use ($di) {
 	    $controller = new \nuvalis\Posts\PostsController();
 	    $controller->setDI($di);

@@ -73,17 +73,7 @@ class TagsController extends \nuvalis\Base\ApplicationController
 
 		$res = $this->tags->searchTag($term);
 
-		$this->theme->configure(ANAX_APP_PATH . 'config/json.php');
-
-		header('Cache-Control: no-cache, must-revalidate');
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header('Content-type: application/json');
-
-		$json = json_encode($res, JSON_PRETTY_PRINT);
-
-		$this->views->add('json/json', [
-	        'json' => $json,
-	    ]);
+		$this->json->render($res);
 
 	}
 	 
