@@ -30,15 +30,29 @@
 					<?php endif; ?>
 
 				</nav>
-			</section>
+			</section>		
 		</div>
 	</header>
 		
 		<?= $this->flashy->show(); ?>
 
 	<main>
+	<div class="inner">
+		<?php if (!$this->auth->isLoggedIn()): ?>
 
-		<div class="inner">
+			<div class="login">
+				<a href="<?= $this->url->create("users/login"); ?>" class="login-modal">Login</a>
+			</div>
+
+		<?php else: ?>
+
+			<div class="login">
+				<a href="<?= $this->url->create("users/logout"); ?>">Logout</a>
+			</div>
+
+		<?php endif ?>
+
+
 			<?php if($this->views->hasContent('featured')) : ?>
 				<section class="featured">
 					<?php $this->views->render('featured')?>			
@@ -84,5 +98,7 @@
 	<?php endif; ?>
 
 	    <script type="text/javascript" src="<?=$this->url->asset('js/auto.js')?>"></script>
+	    <script type="text/javascript" src="<?=$this->url->asset('js/jquery.mzTools.js')?>"></script>
+	    <script type="text/javascript" src="<?=$this->url->asset('js/site.js')?>"></script>
 
 </body>

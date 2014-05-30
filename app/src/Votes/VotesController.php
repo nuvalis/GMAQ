@@ -21,19 +21,51 @@ class VotesController extends \nuvalis\Base\ApplicationController
 	    $this->theme->setTitle("Vote");
 	}
 
-	public function upAction($target, $id)
+	public function upAction($target, $id, $json = null)
 	{
-		$this->isLoggedIn();
-		$this->votes->voteUp($id, $this->auth->userId(), $target);
+
+		if (!$this->auth->isLoggedIn() && $json == 'json') {
+			$this->json->render(['response' => 'Not logged in.']);
+		} else {
+			$this->isLoggedIn();
+		}
+
+		$vote = $this->votes->voteUp($id, $this->auth->userId(), $target);
+
+		if($json == 'json' && $vote == true){
+			$this->json->render(['response' => 'Success']);
+		} else if ($json == 'json') {
+			$this->json->render(['response' => 'Could not vote.']);
+		}
+
+		// Fallback
+
+		$this->flashy->success("Voted successfully");
 
 		$this->redirectTo($target .'/id/'. $id);
 	}
 
-	public function downAction($target, $id)
+	public function downAction($target, $id, $json = null)
 	{
-		$this->isLoggedIn();
-		$this->votes->voteDown($id, $this->auth->userId(), $target);
 		
+		if (!$this->auth->isLoggedIn() && $json == 'json') {
+			$this->json->render(['response' => 'Not logged in.']);
+		} else {
+			$this->isLoggedIn();
+		}
+
+		$vote = $this->votes->voteDown($id, $this->auth->userId(), $target);
+		
+		if($json == 'json' && $vote == true){
+			$this->json->render(['response' => 'Success']);
+		} else if ($json == 'json') {
+			$this->json->render(['response' => 'Could not vote.']);
+		}
+		
+		// Fallback
+
+		$this->flashy->success("Voted successfully");
+
 		$this->redirectTo($target .'/id/'. $id);
 	 
 	}

@@ -2,7 +2,8 @@
 	<?php if ($comments): ?>
 	
 	<?php foreach($comments as $comment) : ?>	
-			<div class="comment-post" data-comments-ID="<?= $comment->id ?>">
+			<div class="comment-post cid-<?= $comment->id ?>" data-comments-ID="<?= $comment->id ?>">
+			
 				<a class="comment-gravatar" href="<?= $this->url->create('users/id/' . $comment->user_id) ?>">
 					<img class="gravatar" src="<?= $this->mzHelpers->get_gravatar($comment->email, 128); ?>" alt="">
 				</a>

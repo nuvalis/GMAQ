@@ -461,15 +461,8 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    ]);
 	}
 
-	public function loginAction() 
+	public function loginAction($type = 'standard') 
 	{
-
-		if($this->auth->userId()){
-
-			$this->flashy->warning('You are already logged in.');
-
-		}
-
 
 		$form = $this->form;
 
@@ -532,13 +525,21 @@ class UsersController extends \nuvalis\Base\ApplicationController
 			header("Location: " . $_SERVER['PHP_SELF']);
 		}
 
-		$this->theme->setTitle("Add user");
+		if($this->auth->userId()){
+
+			$this->flashy->warning('You are already logged in.');
+
+		}
+
+		if($type === 'json'){
+			$this->json->render(['title' => 'Login', 'content' => $form->getHTML()]);
+		}
+
+		$this->theme->setTitle("Login");
 		$this->views->add('nuva/test', [
-			'title' => "Try out a form using CForm",
+			'title' => "Login",
 			'form' => $form->getHTML()
 		]);
-
-
 
 	}
 

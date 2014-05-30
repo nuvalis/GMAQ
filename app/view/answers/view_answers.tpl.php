@@ -4,7 +4,7 @@
 	<?php if($answers) : ?>
 	<?php foreach($answers as $answer) : ?>
 
-		<div class="answer answer-<?= $answer->id ?>" data-answersID="<?= $answer->id ?>">
+		<div class="answer aid-<?= $answer->id ?>">
 
 			
 			<div class="answer-group">
@@ -12,12 +12,12 @@
 				<div class="answer-content"><?= $this->textFilter->markdown($answer->content) ?></div>
 			</div>
 
-			<div class="answer-votes">Votes
-				<a href="<?= $this->url->create("votes/up/answers/" . $answer->id) ?>">
+			<div class="answer-votes" data-answersID="<?= $answer->id ?>">Votes
+				<a class="up-link" href="<?= $this->url->create("votes/up/answers/" . $answer->id) ?>">
 					<div class="vote-up"></div>
 				</a>
 				<?php if ($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?>
-				<a href="<?= $this->url->create("votes/down/answers/" . $answer->id) ?>">
+				<a class="down-link" href="<?= $this->url->create("votes/down/answers/" . $answer->id) ?>">
 					<div class="vote-down"></div>
 				</a>
 			</div>
@@ -29,7 +29,7 @@
 
 				<?php foreach($answer->comment as $comment) : ?>
 						
-					<div class="comment-post">
+					<div class="comment-post cid-<?= $comment->id ?>">
 						<a class="comment-gravatar" href="<?= $this->url->create('users/id/' . $comment->user_id) ?>">
 							<img class="gravatar" src="<?= $this->mzHelpers->get_gravatar($comment->email, 128); ?>" alt="">
 						</a>

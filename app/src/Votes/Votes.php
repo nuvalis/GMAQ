@@ -20,7 +20,7 @@ class Votes extends \Anax\MVC\BaseModel
 		'created'			=> time(),
 		]);
 
-		$this->flashy->success("Voted successfully");
+		return true;
 
  	}
 
@@ -35,7 +35,7 @@ class Votes extends \Anax\MVC\BaseModel
 		'created'			=> time(),
 		]);
 
-		$this->flashy->success("Voted successfully");
+		return true;
  		
  	}
 
