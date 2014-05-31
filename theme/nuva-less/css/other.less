@@ -122,6 +122,11 @@ th, tr, td {
 
 .main-nav {
 	.column(8);
+	margin-top: -0.3em;
+}
+
+.main-content .tags, .main-content .tag-list {
+	float: left;
 }
 
 .question {
@@ -144,10 +149,17 @@ th, tr, td {
 	padding-left: 1em;
 
 	.tag-link {
-		background: rgba(0, 0, 0, 0.2);
+		background: rgba(140, 50, 80, 0.3);
 		padding: 0.3em;
 		.border-radius(4px);
 	}
+}
+
+.tag-list {
+	background: rgba(140, 50, 80, 0.3);
+	padding: 0.4em;
+	.border-radius(4px);
+	margin: 0.5em;
 }
 
 .question .content {
@@ -177,12 +189,7 @@ th, tr, td {
 	padding-top: 0.3em;
 }
 
-.tag-list {
-	background: rgba(0, 0, 0, 0.2);
-	padding: 0.4em;
-	.border-radius(4px);
-	margin: 0.5em;
-}
+
 
 table, tbody, td, tr, th {
 	color: #f0f0f0;
@@ -234,7 +241,7 @@ table, tbody, td, tr, th {
 	border-left: @arrow solid transparent;
 	border-right: @arrow solid transparent;
 	
-	border-bottom: @arrow solid rgba(0, 0, 0, 0.5);
+	border-bottom: @arrow solid rgba(128, 44, 128, 1);
 }
 
 .vote-down {
@@ -243,13 +250,14 @@ table, tbody, td, tr, th {
 	border-left: @arrow solid transparent;
 	border-right: @arrow solid transparent;
 	
-	border-top: @arrow solid rgba(0, 0, 0, 0.5);
+	border-top: @arrow solid rgba(128, 44, 128, 1);
 }
 
 pre {
+	color: white;
 	padding: 1em;
-	background: rgba(0, 0, 0, 0.2);
-	border: solid rgba(0, 0, 0, 0.5) 1px;
+	background: rgb(128, 44, 128);
+	border: solid rgb(190, 60, 190) 1px;
 	margin-top: 2em;
 	margin-bottom:  2em;
 }

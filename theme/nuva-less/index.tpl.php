@@ -47,6 +47,8 @@
 		<?php else: ?>
 
 			<div class="login">
+				Logged in as 
+				<span class="username"><?= $this->auth->username() ?> | </span>
 				<a href="<?= $this->url->create("users/logout"); ?>">Logout</a>
 			</div>
 
