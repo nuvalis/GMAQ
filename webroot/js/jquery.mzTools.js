@@ -14,60 +14,73 @@
             url: "",
             data: 'data',
             ignoreLink: true,
+            bind: true,
             error: function(){
                 settings.title = 'ERROR';
                 settings.content = "Failed with AJAX request.";
                 backdrop();
                 modalUp();
                 modalStyles();
+                $("body").addClass("modal-open");
                 $('.mzmodal').show();
             },
             complete: function(){}
 		}, settings);
 				
-		//Click event on element
-		return this.click(function(e){
+		if(settings.bind){
+			return this.click(function(e){
 
-			if(settings.ignoreLink){e.preventDefault();}
-            
-            console.log('Ajax?' + settings.ajax);
-            
-            if(settings.ajax){
-                
-                console.log("Starting GetJSON")
-                
-                $.ajax({
-                    type: "JSON",
-                    url: settings.url,
-                    data: settings.data,
-                    success: function(data){
-                        settings.title = data.title,
-                        settings.content = data.content
-                        console.log(settings.title);
-                        backdrop();
-                        modalUp();
-                        modalStyles();
-                        $('.mzmodal').show();
-                    
-                    },
-                    dataType: 'json',
-                    error: settings.error,
-                    complete: settings.complete
-                });
-                
-                console.log(settings.title);
-                
-            } else {
-                
-                backdrop();
-                modalUp();
-                modalStyles();
-                $('.mzmodal').show();
-                
-            }
-            
+				if(settings.ignoreLink){e.preventDefault();}
+	            
+	            console.log('Ajax?' + settings.ajax);
+	            
+	            if(settings.ajax){
+	                
+	                console.log("Starting GetJSON")
+	                
+	                $.ajax({
+	                    type: "JSON",
+	                    url: settings.url,
+	                    data: settings.data,
+	                    success: function(data){
+	                        settings.title = data.title,
+	                        settings.content = data.content
+	                        console.log(settings.title);
+	                        backdrop();
+	                        modalUp();
+	                        modalStyles();
+	                        $("body").addClass("modal-open");
+	                        $('.mzmodal').show();
+	                    
+	                    },
+	                    dataType: 'json',
+	                    error: settings.error,
+	                    complete: settings.complete
+	                });
+	                
+	                console.log(settings.title);
+	                
+	            } else {
+	                
+	                backdrop();
+	                modalUp();
+	                modalStyles();
+	                $("body").addClass("modal-open");
+	                $('.mzmodal').show();
+	                
+	            }
+	            
 
-		});
+			});
+		} else {
+
+			backdrop();
+	        modalUp();
+	        modalStyles();
+	        $("body").addClass("modal-open");
+	        $('.mzmodal').show();
+
+		}
 		
 
 		 function modalStyles(){			
@@ -118,6 +131,7 @@
 			 			 
 			 $('.mzmodal-exit').click(function(){
 
+			 	$("body").removeClass("modal-open");
 				$(this).parent().fadeOut(300, function(){$(this).parent().remove();});
 				$('.mzmodal-backdrop-box').fadeOut(300, function(){
 															$('.mzmodal-backdrop-box').remove();

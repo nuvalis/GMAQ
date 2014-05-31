@@ -24,50 +24,47 @@ class VotesController extends \nuvalis\Base\ApplicationController
 	public function upAction($target, $id, $json = null)
 	{
 
-		if (!$this->auth->isLoggedIn() && $json == 'json') {
-			$this->json->render(['response' => 'Not logged in.']);
-		} else {
-			$this->isLoggedIn();
-		}
+		$this->checkLogin($json);
 
 		$vote = $this->votes->voteUp($id, $this->auth->userId(), $target);
 
-		if($json == 'json' && $vote == true){
-			$this->json->render(['response' => 'Success']);
-		} else if ($json == 'json') {
-			$this->json->render(['response' => 'Could not vote.']);
-		}
+		$this->voteJSON($json, $vote, $target, $id);
 
-		// Fallback
-
-		$this->flashy->success("Voted successfully");
-
-		$this->redirectTo($target .'/id/'. $id);
 	}
 
 	public function downAction($target, $id, $json = null)
 	{
 		
+		$this->checkLogin($json);
+
+		$vote = $this->votes->voteDown($id, $this->auth->userId(), $target);
+
+		$this->voteJSON($json, $vote, $target, $id);
+	 
+	}
+
+	private function checkLogin($json)
+	{
+
 		if (!$this->auth->isLoggedIn() && $json == 'json') {
 			$this->json->render(['response' => 'Not logged in.']);
 		} else {
 			$this->isLoggedIn();
 		}
 
-		$vote = $this->votes->voteDown($id, $this->auth->userId(), $target);
-		
+	}
+
+	private function voteJSON($json, $vote, $target, $id)
+	{
 		if($json == 'json' && $vote == true){
 			$this->json->render(['response' => 'Success']);
 		} else if ($json == 'json') {
-			$this->json->render(['response' => 'Could not vote.']);
+			$this->flashy->cleanUp();
+			$this->json->render(['response' => 'Could not vote. <br> You have probably already have voted on this post.']);
+		} else {
+			$this->flashy->success("Voted successfully");
+			$this->redirectTo($target .'/id/'. $id);
 		}
-		
-		// Fallback
-
-		$this->flashy->success("Voted successfully");
-
-		$this->redirectTo($target .'/id/'. $id);
-	 
 	}
 
 	public function calcAction($target, $id) 
