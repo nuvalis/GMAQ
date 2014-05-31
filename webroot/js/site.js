@@ -2,6 +2,7 @@ $('.login-modal').mzModal({
     url: window.base_url + '/users/login/json',
     complete: function () {
         $('.mzmodal-inner > form').attr('action', window.base_url + '/users/login');
+        $('.mzmodal-inner').append('<p class="center"><a href="'+window.base_url+'/users/register">Register new account</a></p>');
     }
 });
 

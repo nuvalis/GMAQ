@@ -12,11 +12,11 @@
 				<div class="answer-content"><?= $this->textFilter->markdown($answer->content) ?></div>
 			</div>
 
-			<div class="answer-votes" data-answersID="<?= $answer->id ?>">Votes
+			<div class="votes answer-votes" data-answersID="<?= $answer->id ?>">Votes
 				<a class="up-link" href="<?= $this->url->create("votes/up/answers/" . $answer->id) ?>">
 					<div class="vote-up"></div>
 				</a>
-				<?php if ($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?>
+				<span class="vote-value"><?php if ($answer->votes == 0){echo "0";} else {echo $answer->votes;} ?></span>
 				<a class="down-link" href="<?= $this->url->create("votes/down/answers/" . $answer->id) ?>">
 					<div class="vote-down"></div>
 				</a>
@@ -42,7 +42,18 @@
 							<span class="comment-date">Comment posted at <?= date("Y-m-d H:i", strtotime($comment->created)); ?></span>
 							
 							<div class="comment-content"><?= $this->textFilter->markdown($comment->content) ?></div>
-						</div>	
+						</div>
+
+						<div class="votes" data-commentsID="<?= $comment->id ?>">
+							<a class="up-link"href="<?= $this->url->create("votes/up/comments/" . $comment->id) ?>">
+								<div class="vote-up"></div>
+							</a>
+							<span class="vote-value"><?php if ($comment->votes == 0){echo "0";} else {echo $comment->votes;} ?></span>
+							<a class="down-link" href="<?= $this->url->create("votes/down/comments/" . $comment->id) ?>">
+								<div class="vote-down"></div>
+							</a>
+						</div>
+
 					</div>
 
 				<?php endforeach; ?>
@@ -64,6 +75,6 @@
 		<h3>No answers yet. Be the first one!</h3>
 	
 	<?php endif; ?>
-<p><a href="<?= $this->url->create('answers/new/' . $questionID); ?>">New Answer</a></p>
+<p class="new-answer"><a href="<?= $this->url->create('answers/new/' . $questionID); ?>">New Answer</a></p>
 </div>
 

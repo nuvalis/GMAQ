@@ -60,7 +60,7 @@ class VotesController extends \nuvalis\Base\ApplicationController
 			$this->json->render(['response' => 'Success']);
 		} else if ($json == 'json') {
 			$this->flashy->cleanUp();
-			$this->json->render(['response' => 'Could not vote. <br> You have probably already have voted on this post.']);
+			$this->json->render(['response' => 'Could not vote. <br> You have probably already have voted on this post. Target ' . $target . ' ID' . $id]);
 		} else {
 			$this->flashy->success("Voted successfully");
 			$this->redirectTo($target .'/id/'. $id);

@@ -105,7 +105,6 @@ th, tr, td {
 
 .comment-content {
 	font-size: 85%;
-
 }
 
 .comment-gravatar {
@@ -114,6 +113,10 @@ th, tr, td {
 
 .comment-main {
 	.column(10);
+}
+
+.comment-post .content-main {
+	.column(8);
 }
 
 .brand {
@@ -274,19 +277,19 @@ pre {
 	}
 }
 
-.new-question {
+.new-question, .new-answer {
 	margin-top: 2em;
 	margin-bottom: 2em;
 }
 
-.new-question a {
+.new-question a, .new-answer a {
 
 	font-size: 130%;
 	padding: 1em;
 	background: rgba(0, 0, 0, 0.1);
 	.border-radius(4px);
 }
-.new-question a:hover {
+.new-question a:hover, .new-answer a:hover {
 	background: rgba(0, 0, 0, 0.2);
 }
 
@@ -322,4 +325,20 @@ pre {
 .login {
 	float: right;
 	font-size: 0.8em;
+}
+
+.comments .vote-up, .comments .vote-down, .comments .vote-value, 
+.comments .votes a, .comments .up-link, .comments .down-link{
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+.comments .votes {
+	padding-left: 0.5em;
+}
+
+.comments .vote-value {
+	padding-left: 0.4em;
+	padding-right: 0.4em;
 }

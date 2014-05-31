@@ -58,12 +58,18 @@ class Answers extends \Anax\MVC\BaseModel
  	public function getAnswersComments($id)
  	{
 
-		$this->db->select("c.content, c.created, u.username, u.email, u.id AS user_id")
-		    ->from("comments AS c")
-		   	->where("answers_id = ?")
-		  	->join("user AS u", "u.id = c.user_id");
+		// $this->db->select("c.content, c.created, u.username, u.email, u.id AS user_id")
+		//     ->from("comments AS c")
+		//    	->where("answers_id = ?")
+		//   	->join("user AS u", "u.id = c.user_id");
 
-		$this->db->execute([$id]);
+		$sql = "SELECT c.id, c.content, c.created, u.email, u.username, u.id AS user_id,
+	 		(SELECT SUM(v.vote_value) FROM votes v WHERE c.id = v.comments_id) AS votes
+	 		FROM comments c
+	 			INNER JOIN user u ON u.id = c.user_id
+	 		WHERE answers_id = ?";
+
+		$this->db->execute($sql, [$id]);
 		return $this->db->fetchAll();
  	}
 
