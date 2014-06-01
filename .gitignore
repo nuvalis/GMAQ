@@ -20,4 +20,5 @@ composer.json
 composer.lock
 vendor/.git
 vendor
-app/db
+app/db/*.db
+app/db/*.htsqlite
