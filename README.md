@@ -5,9 +5,10 @@ dbwebb.se KMOM710 WIP
 
 Installation
 ------------------
-Step 1 Clone it
-Step 2 Visit webroot/install and webroot/setup for new dev sqlitedb. 
-Step 3 Play.
+- Step 1 Clone it
+- Step 2 Use Composer to install the required packages
+- Step 3 Visit {yoururl}/webroot/install and {yoururl}/webroot/setup for new dev sqlitedb. 
+- Step 4 Thats it! Start posting and testing!
 
 TODO
 ==========
