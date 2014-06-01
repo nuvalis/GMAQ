@@ -7,7 +7,7 @@ ErrorDocument 404 /404.php
   RewriteEngine on
 #
 #  # Must use RewriteBase on www.student.bth.se, Rewritebase for url /~mos/test is /~mos/test/
- #  RewriteBase /~nuvalis/projects/GMAQ/webroot/
+  RewriteBase /~nuvalis/projects/GMAQ/webroot/
 #
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
