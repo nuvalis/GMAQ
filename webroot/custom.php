@@ -2,7 +2,7 @@
 
 	$di = new \Anax\DI\CDIFactoryDefault();
 
-	if(!class_exists(\Mos\Database\CDatabaseBasic)){
+	if(!class_exists('\Mos\Database\CDatabaseBasic')){
 
 		throw new Exception("DB dependency is not installed. Please run composer install command.", 1);
 		
