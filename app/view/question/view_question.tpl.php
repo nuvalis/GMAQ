@@ -28,14 +28,13 @@
 		<?= $this->textFilter->markdown($question->content) ?>
 	</div>
 
-	<h3 class="clear">Comments</h3>
-
-	<?php include ANAX_APP_PATH . '/view/comments/partial.tpl.php'; ?>
-
-	<p><a href="<?= $this->url->create('comments/new/questions/' . $question->id); ?>">Comment this Question</a></p>
-
-
 </div>
+
+<h3 class="clear">Comments</h3>
+
+<?php include ANAX_APP_PATH . '/view/comments/partial.tpl.php'; ?>
+
+<p><a href="<?= $this->url->create('comments/new/questions/' . $question->id); ?>">Comment this Question</a></p>
 
 <p class="order smaller right">
 	<span>Order By: </span>
