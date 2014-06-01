@@ -4,6 +4,61 @@
 	require __DIR__.'/custom.php'; // Custom Config
 
 $app->router->add('install', function() use ($app) {
+
+		$app->db->setVerbose();
+
+		$app->theme->setTitle("Setup");
+	 
+		$app->db->dropTableIfExists('user')->execute();
+	 
+		$app->db->createTable(
+			'user',
+			[
+				'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+				'username' => ['varchar(30)', 'unique', 'not null'],
+				'email' => ['varchar(80)'],
+				'name' => ['varchar(80)'],
+				'password' => ['varchar(255)'],
+				'created' => ['datetime'],
+				'updated' => ['datetime'],
+				'deleted' => ['datetime'],
+				'active' => ['datetime'],
+			]
+		)->execute();
+
+		$app->db->insert(
+			'user',
+			['username', 'email', 'name', 'password', 'created', 'active']
+		);
+	
+		$now = $app->mzHelpers->now();
+	
+		$app->db->execute([
+			'admin',
+			'admin@test.se',
+			'Administrator',
+			password_hash('admin', PASSWORD_DEFAULT),
+			$now,
+			$now
+		]);
+	
+		$app->db->execute([
+			'doe',
+			'doe@test.se',
+			'John/Jane Doe',
+			password_hash('doe', PASSWORD_DEFAULT),
+			$now,
+			$now
+		]);
+
+		$app->db->execute([
+			'test',
+			'test@test.se',
+			'Test Testsson',
+			password_hash('test', PASSWORD_DEFAULT),
+			$now,
+			$now
+		]);
 	 
 		$app->db->setVerbose();
 
@@ -167,7 +222,7 @@ $app->router->add('install', function() use ($app) {
 		
 
 
-		$app->flashy->success("Setup is Done");
+		$app->flashy->success("Setup is Done, Please delete the webroot/install.php file");
 
 	    $url = $app->url->create('');
 	    $app->response->redirect($url);

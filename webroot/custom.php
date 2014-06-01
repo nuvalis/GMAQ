@@ -2,6 +2,12 @@
 
 	$di = new \Anax\DI\CDIFactoryDefault();
 
+	if(!class_exists(\Mos\Database\CDatabaseBasic)){
+
+		throw new Exception("DB dependency is not installed. Please run composer install command.", 1);
+		
+	}
+
 	$di->setShared('db', function() {
 	    $db = new \Mos\Database\CDatabaseBasic();
 	    $db->setOptions(require ANAX_APP_PATH . 'config/config_sqlite.php');
