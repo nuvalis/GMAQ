@@ -6,9 +6,7 @@
         "php": ">=5.4",
         "nuvalis/mzflash": "~1.0.0",
         "mos/cdatabase": "dev-master",
-        "mos/cform": "2.*@dev"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.1.*"        
+        "mos/cform": "2.*@dev",
+        "ircmaxell/password-compat": "~1.0.3"
     }
 }

@@ -2,7 +2,7 @@
 <h1><?= $question->title ?></h1>
 
 	<div class="posted-by smaller right">Asked by 
-	<a href="<?= $this->url->create('user/id' . $question->user_id) ?>"><?= $question->username ?></a> 
+	<a href="<?= $this->url->create('users/id/' . $question->user_id) ?>"><?= $question->username ?></a> 
 	on <?= date("Y-m-d H:i", strtotime($question->created)); ?></div>
 
 	<div class="views">Views <br><br> <?php if ($question->views === 0){echo "0";} else {echo $question->views;} ?></div>

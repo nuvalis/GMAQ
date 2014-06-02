@@ -1,5 +1,8 @@
 <h1><?= $user->name ?></h1>
 <div class="user-box">
+
+	<img class="gravatar right" src="<?= $this->mzHelpers->get_gravatar($user->email, 128); ?>" alt="">
+
 	<p>Username: <?= $user->username ?></p>
 	<p>Status: <?php if($user->deleted !=  null) {echo "<span class='softdelete'>Deleted</span>";} else {echo "<span class='green-active'>Active</span>";} ?></p>
 	<p>Last Activity: <?= $user->active ?></p>
