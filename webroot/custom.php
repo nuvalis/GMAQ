@@ -90,3 +90,5 @@
 	$app->navbar->configure(ANAX_APP_PATH . 'config/navbar.php');
 	$app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
 	$app->session; // Start Session
+
+	ob_start(); // Dirty fix for wierd unexplained header outputs from CDatabase??
