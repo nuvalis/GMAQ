@@ -44,7 +44,7 @@ class Helpers implements \Anax\DI\IInjectionAware
   	{
 
 		$content = $this->textFilter->markdown($content);
-		$content = strip_tags($content);
+		$content = strip_tags($content, '<p><a><br><pre><code>');
 		$content = htmlentities($content);
 		$content = $this->truncate($content, $chars);
 
