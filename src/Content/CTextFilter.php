@@ -114,9 +114,17 @@ class CTextFilter
      *
      * @link http://dbwebb.se/coachen/skriv-for-webben-med-markdown-och-formattera-till-html-med-php
      */
-    public function markdown($text) 
+    public function markdown($text, $safe = true)
     {
-        return \Michelf\MarkdownExtra::defaultTransform($text);
+
+        $markdown = new \Michelf\MarkdownExtra();
+
+        if($safe){
+            $markdown->no_markup = true;
+            $markdown->no_entities = true;
+        }
+       
+       return $markdown->transform($text);
     }
 
 
