@@ -234,7 +234,6 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 				    $this->users->save([
 				    	'id'		=> $this->auth->userId(),
-				        'username' 	=> $form->Value('username'),
 				        'email' 	=> $form->Value('email'),
 				        'name' 		=> $form->Value('name'),
 				        'updated' 	=> $this->mzHelpers->now(),
