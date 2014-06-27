@@ -251,13 +251,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 		$status = $form->check();
 
 		if ($status === true) {
-		 	$this->flash->success("Changes has been saved!");
+		 	$this->flashy->success("Changes has been saved!");
 		    $url = $this->url->create('users/id/' . $this->auth->userId());
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
 		
-			$this->flash->error("Something went wrong in the saving process.");
+			$this->flashy->error("Something went wrong in the saving process.");
 			header("Location: " . $_SERVER['PHP_SELF']);
 			exit;
 		}
@@ -330,13 +330,13 @@ class UsersController extends \nuvalis\Base\ApplicationController
 
 		if ($status === true) {
 		 	
-		 	$this->flash->success("New password has been saved!");
+		 	$this->flashy->success("New password has been saved!");
 		    $url = $this->url->create('users/id/' . $this->auth->userId());
 		    $this->response->redirect($url);
 		
 		} else if ($status === false) {
 
-			$this->flash->error("Something went wrong in the saving process.");
+			$this->flashy->error("Something went wrong in the saving process.");
 			header("Location: " . $_SERVER['PHP_SELF']);
 			exit;
 
@@ -370,7 +370,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	 
 	    $url = $this->url->create('users/list');
 
-	    $this->flash->success("Perma Deleted User");
+	    $this->flashy->success("Perma Deleted User");
 	    $this->response->redirect($url);
 	}
 
@@ -392,7 +392,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $user->deleted = $this->mzHelpers->now();
 	    $user->save();
 
-	    $this->flash->success("Soft Deleted User");
+	    $this->flashy->success("Soft Deleted User");
 	 
 	    $url = $this->url->create('users/id/' . $id);
 	    $this->response->redirect($url);
@@ -417,7 +417,7 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $user->deleted = null;
 	    $user->save();
 
-	 	$this->flash->success("Reanimated user is a Success");
+	 	$this->flashy->success("Reanimated user is a Success");
 
 	    $url = $this->url->create('users/id/' . $id);
 	    $this->response->redirect($url);
