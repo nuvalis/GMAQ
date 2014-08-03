@@ -23,6 +23,12 @@ return [
             'url'   => 'questions',  
             'title' => 'Questions'
         ],
+        
+        'users'  => [
+            'text'  => 'Users',   
+            'url'   => 'users',  
+            'title' => 'Users'
+        ],
 
         'tags'  => [
             'text'  => 'Tags',   

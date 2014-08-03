@@ -74,6 +74,21 @@ class User extends \Anax\MVC\BaseModel
 	    return $this->db->fetchAll();
 
 	}
+    
+    public function listUsers()
+	{
+		$sql = "SELECT u.username, u.id, u.email,
+				(SELECT COUNT(*) FROM answers a WHERE u.id = a.user_id) +
+				(SELECT COUNT(*) FROM comments c WHERE u.id = c.user_id) +
+				(SELECT COUNT(*) FROM questions q WHERE u.id = q.user_id) +
+				(SELECT COUNT(*) FROM votes v WHERE u.id = v.user_id) AS points
+				FROM user u
+				ORDER BY points DESC
+				LIMIT 50";
+		$this->db->execute($sql);
+	    return $this->db->fetchAll();
+
+	}
 
 	public function userPoints($id)
 	{

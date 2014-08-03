@@ -97,10 +97,29 @@ class UsersController extends \nuvalis\Base\ApplicationController
 	    $this->users = new \Anax\Users\User();
 	    $this->users->setDI($this->di);
 	 
+	    $all = $this->users->listUsers();
+
+	    $this->theme->setTitle("List all users");
+	    $this->views->add('users/list-all', [
+	        'users' => $all,
+	        'title' => "Users",
+	    ]);
+	}
+    
+    /**
+	 * List all users.
+	 *
+	 * @return void
+	 */
+	public function adminListAction()
+	{
+	    $this->users = new \Anax\Users\User();
+	    $this->users->setDI($this->di);
+	 
 	    $all = $this->users->findAll();
 	 
 	    $this->theme->setTitle("List all users");
-	    $this->views->add('users/list-all', [
+	    $this->views->add('users/list-all-admin', [
 	        'users' => $all,
 	        'title' => "View all users",
 	    ]);
